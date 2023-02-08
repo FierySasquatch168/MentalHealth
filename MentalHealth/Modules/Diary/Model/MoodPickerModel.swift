@@ -11,7 +11,7 @@ struct MoodPickerModel {
     let icon: UIImage
 }
 
-final class MoodModel {
+final class MoodModelForPickerView {
     static var moods = [UIImage] (
         arrayLiteral: UIImage(named: "Happy") ?? UIImage(),
         UIImage(named: "Resentment") ?? UIImage())

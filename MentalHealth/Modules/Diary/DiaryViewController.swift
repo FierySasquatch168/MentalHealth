@@ -16,6 +16,7 @@ class DiaryViewController: UIViewController {
     private var updatedNotes: [MoodNote] = [] {
         didSet {
             setupMiddleStackView()
+            tableView.reloadData()
         }
     }
     
@@ -35,11 +36,14 @@ class DiaryViewController: UIViewController {
         return tableView
     }()
     
+    // MARK: StackViews
+    
     private lazy var middleStackView: UIStackView = {
-        var stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 5
+        stackView.alignment = .center
         stackView.addArrangedSubview(howDoYouFeelLabel)
         stackView.addArrangedSubview(addFirstNote)
         stackView.addArrangedSubview(mainImageView)
@@ -50,8 +54,10 @@ class DiaryViewController: UIViewController {
         return stackView
     }()
     
+    // MARK: Lazy properties
+    
     private lazy var howDoYouFeelLabel: UILabel = {
-        var label = UILabel()
+        let label = UILabel()
         label.text = "How do you feel?"
         label.textAlignment = .center
         label.font = UIFont(name: CustomFont.kyivTypeSansMedium3.rawValue, size: 30)
@@ -61,7 +67,7 @@ class DiaryViewController: UIViewController {
     }()
     
     private lazy var addFirstNote: UILabel = {
-        var label = UILabel()
+        let label = UILabel()
         label.text = "Add the first note about your mood"
         label.textAlignment = .center
         label.font = UIFont(name: CustomFont.InterLight.rawValue, size: 20)
@@ -89,7 +95,7 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
-    // Mark: Lifecycle
+    // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,7 +104,7 @@ class DiaryViewController: UIViewController {
         
         // get items from CoreData
         fetchNotesFromCoreData()
-
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -135,8 +141,24 @@ class DiaryViewController: UIViewController {
     // MARK: Setup UI
     
     private func setupUI() {
+        setupTableView()
         setupBackgroundView()
         
+        
+    }
+    
+    // MARK: Setup tableView
+    
+    private func setupTableView() {
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
     
     private func setupBackgroundView() {
@@ -186,16 +208,43 @@ extension DiaryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomDiaryTableViewCell.reuseIdentifier, for: indexPath) as? CustomDiaryTableViewCell else { return UITableViewCell() }
         let note = updatedNotes[indexPath.row]
+        
         cell.set(note: note)
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // Create swipe action
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
+            // Which note to remove
+            let noteToRemove = self.updatedNotes[indexPath.row]
+            // Remove the note
+            self.context.delete(noteToRemove)
+            // Save the data to Core Data
+            do {
+                try self.context.save()
+            } catch {
+                print(error)
+            }
+            
+            // Re-fetch the data
+            self.fetchNotesFromCoreData()
+        }
+        return UISwipeActionsConfiguration(actions: [action])
+    }
 }
 
 extension DiaryViewController: DataUpdateDelegate {
     func onDataUpdate(data: MoodNote) {
         updatedNotes.append(data)
+        
+        // Save the data
+        do {
+            try self.context.save()
+        } catch {
+            print(error)
+        }
+        tableView.reloadData()
     }
     
     
