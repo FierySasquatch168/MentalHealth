@@ -16,6 +16,7 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
     let context = (UIApplication.shared.delegate as! AppDelegate)
     
     // Protocol conformance
+    // MARK: Переписать свойства, они сейчас не связаны с UI
     var updatingData: [MoodNote] = []
     var mood: UIImage?
     var backgroundImage: UIImage?
@@ -52,6 +53,7 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
     private lazy var topImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
+        imageView.image = mood
         return imageView
     }()
     
@@ -59,7 +61,7 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 8
+        stackView.spacing = 5
         stackView.addArrangedSubview(topMoodLabel)
         stackView.addArrangedSubview(topDateDescriptionLabel)
         return stackView
@@ -69,6 +71,7 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
         let label = UILabel()
         label.font = UIFont(name: CustomFont.kyivTypeSansRegular2.rawValue, size: 25)
         label.textAlignment = .center
+        label.text = moodDescription
         return label
     }()
     
@@ -110,7 +113,25 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
         
         setupUI()
         setupCollectionView()
+        setDateAndTimeOfNote()
         
+    }
+    
+    private func setDateAndTimeOfNote() {
+        // Формируем дату в нужном виде
+        let dayNow = Date()
+        let dayFormatter = DateFormatter()
+        dayFormatter.dateFormat = "dd"
+        let day = dayFormatter.string(from: dayNow)
+        
+        dayFormatter.locale = Locale(identifier: "en_US")
+        dayFormatter.dateFormat = "LLLL"
+        let month = dayFormatter.string(from: dayNow)
+        
+        dayFormatter.dateFormat = "HH:mm"
+        let time = dayFormatter.string(from: dayNow)
+        
+        topDateDescriptionLabel.text = "today, \(month) \(day)\n at \(time)"
     }
     
     // MARK: CollectionView setup
