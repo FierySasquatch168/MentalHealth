@@ -16,7 +16,7 @@ extension MoodNote {
         return NSFetchRequest<MoodNote>(entityName: "MoodNote")
     }
 
-    @NSManaged public var backGroundImage: UIImage?
+    @NSManaged public var backgroundImage: UIImage?
     @NSManaged public var day: String?
     @NSManaged public var month: String?
     @NSManaged public var mood: UIImage?

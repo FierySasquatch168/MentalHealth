@@ -30,9 +30,9 @@ class LoginViewController: UIViewController {
     private lazy var mainStackView: UIStackView = {
         var stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 60
+        stackView.spacing = 334
         stackView.addArrangedSubview(yourselfLogo)
-        stackView.addArrangedSubview(loginStackView)
+//        stackView.addArrangedSubview(loginStackView)
         stackView.addArrangedSubview(startButton)
         return stackView
     }()
@@ -111,12 +111,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-//
-//        for family in UIFont.familyNames.sorted() {
-//            let names = UIFont.fontNames(forFamilyName: family)
-//            print("Family: \(family) Font names: \(names)")
-//        }
-        
+                
         setupUI()
     }
 

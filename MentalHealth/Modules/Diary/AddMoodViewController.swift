@@ -7,11 +7,9 @@
 
 import UIKit
 
-class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDataControllerProtocol {
+class AddMoodViewController: DiaryModuleViewController, ReasonsUpdateDelegate, UpdatingDataControllerProtocol {
     
-    // Reference to managed context
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
+    // Protocol conformance
     var updatingData: [MoodNote] = []
     var mood: UIImage?
     var backgroundImage: UIImage?
@@ -20,54 +18,69 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
     private let moodBackgroundChoice = ["Happy":"Rectangle 15", "Resentment":"Rectangle 14"]
     var handleUpdatedDataDelegate: DataUpdateDelegate?
     
+    // MARK: Middle stack view content
     private lazy var howDoYouFeelLabel: UILabel = {
-        var label = UILabel()
+        let label = UILabel()
+        label.text = "How do you feel?"
+        label.font = UIFont(name: CustomFont.kyivTypeSansMedium3.rawValue, size: 30)
         
         return label
     }()
     
     private lazy var swipeUpOrDownLabel: UILabel = {
-        var label = UILabel()
+        let label = UILabel()
+        label.text = "Swipe up or down"
+        label.font = UIFont(name: CustomFont.InterLight.rawValue, size: 20)
         
         return label
     }()
     
     private lazy var pickerView: UIPickerView = {
-        var pickerView = UIPickerView()
+        let pickerView = UIPickerView()
         
         return pickerView
     }()
     
+    private lazy var moodLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: CustomFont.kyivTypeSansRegular2.rawValue, size: 30)
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
+    }()
+    
+    // MARK: PickerContent
+    
     private lazy var moodPickerModels: [MoodPickerModel] = {
         var models: [MoodPickerModel] = []
         
-        for value in MoodModel.moods {
+        for value in MoodModelForPickerView.moods {
             models.append(.init(icon: value))
         }
         
         return models
     }()
     
-    private lazy var moodLabel: UILabel = {
-        var label = UILabel()
-        
-        return label
-    }()
+    
     
     // MARK: Stackview properties
     
     private lazy var middleStackView: UIStackView = {
-        var stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.distribution = .fill
+        stackView.distribution = .fillProportionally
         stackView.spacing = 5
+        stackView.alignment = .center
         
+        stackView.addArrangedSubview(howDoYouFeelLabel)
+        stackView.addArrangedSubview(swipeUpOrDownLabel)
+        stackView.addArrangedSubview(pickerView)
         
         return stackView
     }()
     
     private lazy var bottomButtonStackView: UIStackView = {
-        var stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 17
         stackView.distribution = .fillEqually
@@ -80,14 +93,15 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
     // MARK: Buttons
     
     private lazy var addButton: BottomActionButton = {
-        var button = BottomActionButton(color: .customPurple ?? .black, title: "Add")
+        let button = BottomActionButton(color: .customPurple ?? .black, title: "Add")
         button.heightAnchor.constraint(equalToConstant: 61).isActive = true
+        button.addTarget(self, action: #selector(addNote), for: .touchUpInside)
         
         return button
     }()
     
     private lazy var saveButton: BottomActionButton = {
-        var button = BottomActionButton(color: .customPurple ?? .black, title: "Save")
+        let button = BottomActionButton(color: .customPurple ?? .black, title: "Save")
         button.heightAnchor.constraint(equalToConstant: 61).isActive = true
         button.addTarget(self, action: #selector(saveNoteWithoutDetails), for: .touchUpInside)
         
@@ -95,7 +109,7 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
     }()
     
     private lazy var dismissButton: UIButton = {
-        var button = UIButton()
+        let button = UIButton()
         let image = UIImage(systemName: "xmark")
         image?.withRenderingMode(.alwaysTemplate)
         button.setImage(image, for: .normal)
@@ -108,13 +122,13 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
     // MARK: BackgroundGradient properties
     
     private lazy var backgroundTopGradientImage: UIImageView = {
-        var imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.image = UIImage(named: "backgroundTopGradientImage")
         return imageView
     }()
     
     private lazy var backgroundBottomGradientImage: UIImageView = {
-        var imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.image = UIImage(named: "backgroundBottomGradientImage")
         return imageView
     }()
@@ -126,8 +140,11 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
         
         view.backgroundColor = .white
         
+        print("NavigationController nib name is \(self.navigationController?.viewControllers)")
+        
         setupUI()
         pickerViewSetup()
+        setupMoodLabel()
         moodLabel.text = "Happy"
     }
     
@@ -144,6 +161,8 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
+    // MARK: Delegate func
+    
     // saving note through delegate from the moodBoardVC
     func saveNote(data: MoodNote) {
         // handle data to delegate
@@ -153,12 +172,13 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
         self.navigationController?.popToRootViewController(animated: true)
     }
     
+    // MARK: @OBJC funcs
+    
     @objc private func dismissToRoot() {
         self.navigationController?.popToRootViewController(animated: true)
     }
     
     @objc private func addNote() {
-        
         
         // make data for transfering
         guard let moodLabelText = moodLabel.text,
@@ -167,6 +187,14 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
         
         // transfer data
         let nextVC = MoodBoardViewController()
+        nextVC.mood = moodImage
+        nextVC.backgroundImage = actualBackgroundImage
+        nextVC.moodDescription = moodLabelText
+        
+        // set self as the delegate
+        nextVC.handleUpdatedDataDelegate = self
+        
+        goToNextVC(viewController: nextVC)
     }
     
     @objc private func saveNoteWithoutDetails() {
@@ -174,15 +202,24 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
         saveWithoutDetails()
     }
     
+    // MARK: Private funcs
+    
+    private func goToNextVC(viewController: UIViewController) {
+        navigationController?.present(viewController, animated: true)
+    }
+    
     private func saveWithoutDetails() {
         // make data for transfer
         guard let moodLabelText = moodLabel.text,
-              let moodImage = UIImage(named: moodLabelText),
-              let backgroundImage = UIImage(named: moodBackgroundChoice[moodLabelText] ?? "noImageAvailable") else { return }
+                let moodImage = UIImage(named: moodLabelText),
+                let backgroundImage = UIImage(named: moodBackgroundChoice[moodLabelText] ?? "noImageAvailable")
+        else {
+            return
+        }
         
         let newNote = formNewNote()
         newNote.mood = moodImage
-        newNote.backGroundImage = backgroundImage
+        newNote.backgroundImage = backgroundImage
         newNote.moodDescription = moodLabelText
         newNote.reasonsDescription = "You preferred not to describe your feelings"
         
@@ -193,24 +230,6 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
         self.navigationController?.popToRootViewController(animated: true)
     }
     
-    private func formNewNote() -> MoodNote {
-        let newNote = MoodNote(context: self.context)
-        newNote.day = setTheDate(with: "dd")
-        newNote.month = setTheDate(with: "LLL")
-        newNote.time = setTheDate(with: "HH:mm")
-        
-        return newNote
-    }
-    
-    private func setTheDate(with dateFormat: String) -> String {
-        let dateNow = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = dateFormat
-        let date = dateFormatter.string(from: dateNow)
-        
-        return date
-    }
-    
     // MARK: UI setup
     
     private func setupUI() {
@@ -219,6 +238,7 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
         
         setupDismissButton()
         setupBottomButtonStackView()
+        setupMiddleStackView()
     }
     
     // MARK: Background
@@ -254,6 +274,19 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
             dismissButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5)
         ])
     }
+    // MARK: StackView UI
+    
+    private func setupMiddleStackView() {
+        view.addSubview(middleStackView)
+        middleStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            middleStackView.topAnchor.constraint(equalTo: dismissButton.bottomAnchor, constant: 41),
+            middleStackView.bottomAnchor.constraint(equalTo: bottomButtonStackView.topAnchor, constant: -54),
+            middleStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            middleStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
+        ])
+    }
     
     private func setupBottomButtonStackView() {
         view.addSubview(bottomButtonStackView)
@@ -265,8 +298,21 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
             bottomButtonStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -42)
         ])
     }
+    
+    private func setupMoodLabel() {
+        view.addSubview(moodLabel)
+        moodLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            moodLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            moodLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            moodLabel.bottomAnchor.constraint(equalTo: middleStackView.bottomAnchor, constant: -43)
+        ])
+    }
 
 }
+
+// MARK: Extensions
 
 extension AddMoodViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -280,7 +326,7 @@ extension AddMoodViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return 300.0
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         return 300.0
     }

@@ -9,14 +9,16 @@ import UIKit
 
 class CustomDiaryTableViewCell: UITableViewCell {
     
+    // MARK: StackViews
     // main stack of the cell
     private lazy var mainStackView: UIStackView = {
-        var stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 14
+        stackView.alignment = .center
         stackView.distribution = .fill
         stackView.addArrangedSubview(dateStackView)
-        stackView.addArrangedSubview(moodBoardStackView)
+        stackView.addArrangedSubview(moodDescriptionStackView)
         
         return stackView
     }()
@@ -24,43 +26,20 @@ class CustomDiaryTableViewCell: UITableViewCell {
     // left stack with day and month
     
     private lazy var dateStackView: UIStackView = {
-        var stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fill
         stackView.alignment = .center
         stackView.addArrangedSubview(dayLabel)
         stackView.addArrangedSubview(monthLabel)
-        
-        return stackView
-    }()
-    
-    // right stack with images and mood description
-    
-    private lazy var moodBoardStackView: UIStackView = {
-        var stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.addArrangedSubview(backgroundImageStackView)
-        stackView.addArrangedSubview(moodDescriptionStackView)
-        
-        return stackView
-    }()
-    
-    // background image of the right stack with images
-    
-    private lazy var backgroundImageStackView: UIStackView = {
-        var stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.addArrangedSubview(backgroundImage)
-        
+                
         return stackView
     }()
     
     // right upper stack with moodImage and time/feeling/reasons
     
     private lazy var moodDescriptionStackView: UIStackView = {
-        var stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.distribution = .fill
@@ -73,11 +52,11 @@ class CustomDiaryTableViewCell: UITableViewCell {
     // moodImage of the right stackView
     
     private lazy var moodImageStackView: UIStackView = {
-        var stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
-        
         stackView.addArrangedSubview(moodImage)
+        moodImage.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 15).isActive = true
         
         return stackView
     }()
@@ -85,7 +64,7 @@ class CustomDiaryTableViewCell: UITableViewCell {
     // right stack with time feeling and reasons
     
     private lazy var timeFeelingReasonsStackView: UIStackView = {
-        var stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.addArrangedSubview(timeLabel)
@@ -95,24 +74,29 @@ class CustomDiaryTableViewCell: UITableViewCell {
         return stackView
     }()
     
+    // MARK: Stackviews' content
+    
     private lazy var dayLabel: UILabel = {
-        var label = UILabel()
+        let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont(name: CustomFont.kyivTypeSansBold3.rawValue, size: 30)
+        label.textColor = .customDate
         
         return label
     }()
     
     private lazy var monthLabel: UILabel = {
-        var label = UILabel()
+        let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont(name: CustomFont.kyivTypeSansBold3.rawValue, size: 30)
+        label.font = UIFont(name: CustomFont.kyivTypeSansBold3.rawValue, size: 20)
+        label.textColor = .customDate
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
         
         return label
     }()
     
     private lazy var timeLabel: UILabel = {
-        var label = UILabel()
+        let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont(name: CustomFont.kyivTypeSansRegular2.rawValue, size: 14)
         
@@ -120,7 +104,7 @@ class CustomDiaryTableViewCell: UITableViewCell {
     }()
     
     private lazy var moodDescription: UILabel = {
-        var label = UILabel()
+        let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont(name: CustomFont.kyivTypeSansRegular2.rawValue, size: 22)
         
@@ -128,30 +112,33 @@ class CustomDiaryTableViewCell: UITableViewCell {
     }()
     
     private lazy var reasonsDescription: UILabel = {
-        var label = UILabel()
+        let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont(name: CustomFont.InterLight.rawValue, size: 14)
+        label.numberOfLines = 0
         
         return label
     }()
     
     private lazy var moodImage: UIImageView = {
-        var imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.clipsToBounds = true
-        
         return imageView
     }()
     
     private lazy var backgroundImage: UIImageView = {
-        var imageView = UIImageView()
-        
+        let imageView = UIImageView()
         return imageView
     }()
+    
+    // MARK: Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupMainStackView()
+        setupBackgroundImage()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -170,8 +157,22 @@ class CustomDiaryTableViewCell: UITableViewCell {
         ])
     }
     
+    private func setupBackgroundImage() {
+        contentView.addSubview(backgroundImage)
+        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            backgroundImage.topAnchor.constraint(equalTo: moodDescriptionStackView.topAnchor),
+            backgroundImage.leadingAnchor.constraint(equalTo: moodDescriptionStackView.leadingAnchor),
+            backgroundImage.trailingAnchor.constraint(equalTo: moodDescriptionStackView.trailingAnchor),
+            backgroundImage.bottomAnchor.constraint(equalTo: moodDescriptionStackView.bottomAnchor)
+        ])
+        
+        
+    }
+    
     func set(note: MoodNote) {
-        backgroundImage.image = note.backGroundImage
+        backgroundImage.image = note.backgroundImage
         dayLabel.text = note.day
         timeLabel.text = note.time
         moodImage.image = note.mood

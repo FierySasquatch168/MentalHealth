@@ -19,6 +19,7 @@ class MainTabBarViewController: UITabBarController {
         UITabBar.appearance().unselectedItemTintColor = .customCVBackground
         UITabBar.appearance().backgroundColor = .customDeepBlue
         UITabBar.appearance().isTranslucent = false
+        UITabBar.appearance().isHidden = false
         
         setupVC()
     }
