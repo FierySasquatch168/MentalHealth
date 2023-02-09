@@ -15,8 +15,14 @@ class CustomReasonButton: UIButton {
         backgroundColor = color
         widthAnchor.constraint(equalToConstant: 68).isActive = true
         heightAnchor.constraint(equalToConstant: 68).isActive = true
-        layer.cornerRadius = frame.size.width / 2
         
+        
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        layer.cornerRadius = frame.size.width / 2
     }
     
     required init?(coder: NSCoder) {

@@ -23,12 +23,18 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
     var moodDescription: String?
     
     // Reasons to send to tableView
-    var chosenReasons = [String]()
-    var reasonsDictionary: [UIButton : String] = [:]
-    private let moodBackgroundChoice = ["Happy":"Rectangle 15", "Resentment":"Rectangle 14"]
-    private var buttonImageNamesTop: [String] = ["Business", "Friends", "Lotos", "Student Male", "Romance", "Partly Cloudy", "Home Page", "Airport"]
+    private var collectionViewButtonMockData: [String: String] = [
+        "Work" : "Business",
+        "Friends" : "Friends",
+        "Relax" : "Lotus",
+        "Study" : "Student Male",
+        "Love" : "Romance",
+        "Weather" : "Partly Cloudy Day",
+        "Family" : "Home Page",
+        "Vacation" : "Airport"
+    ]
     private var buttonsForCollectionView: [ReasonButtonModel] = []
-    private var sections = ["Section"]
+    private var sections = ["Main"]
     
     // Delegate
     var handleUpdatedDataDelegate: ReasonsUpdateDelegate?
@@ -88,6 +94,7 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
         label.font = UIFont(name: CustomFont.kyivTypeSansMedium3.rawValue, size: 30)
         label.textAlignment = .center
         label.numberOfLines = 2
+        label.text = "Tell me what's going on with you?"
         return label
     }()
     
@@ -113,6 +120,8 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
         
         setupUI()
         setupCollectionView()
+        createDataSourceMockModel()
+        createDataSource()
         setDateAndTimeOfNote()
         
     }
@@ -134,13 +143,21 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
         topDateDescriptionLabel.text = "today, \(month) \(day)\n at \(time)"
     }
     
+    private func createDataSourceMockModel() {
+        let color = UIColor.customButtonPurple ?? .black
+        let button = CustomReasonButton(color: color)
+        
+        for (key, value) in collectionViewButtonMockData {
+            let model = ReasonButtonModel(button: button, imageName: value, buttonTitle: key)
+            buttonsForCollectionView.append(model)
+        }
+    }
+    
     // MARK: CollectionView setup
     
     private func setupCollectionView() {
-        let layout = UICollectionViewLayout()
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
         guard let collectionView = collectionView else { return }
-        
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -148,7 +165,7 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
             collectionView.topAnchor.constraint(equalTo: tellMeLabel.bottomAnchor, constant: 38),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -215)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -200)
         ])
         
         // MARK: UICV cells registration
@@ -157,17 +174,21 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
     
     private func createDataSource() {
         guard let collectionView = collectionView else { return }
-        
-        dataSource = DataSource(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
+        print("createDataSource starts")
+        dataSource = DataSource(collectionView: collectionView, cellProvider: { [unowned self] (collectionView, indexPath, itemIdentifier) in
+            print("createDataSource works")
             return self.cell(collectionView: collectionView, indexPath: indexPath, item: itemIdentifier)
         })
         
         dataSource.apply(createSnapshot())
+        print("snapshot applied")
     }
     
     private func cell(collectionView: UICollectionView, indexPath: IndexPath, item: ReasonButtonModel) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReasonCustomCollectionViewCell.reuseIdentifier, for: indexPath) as? ReasonCustomCollectionViewCell else { fatalError("Can not configure custom CV cell in MoodBoardVC") }
+        print("private func cell works")
         cell.setCellWithValuesOf(item: item)
+        print("cell.setCellWithValuesOf works")
         return cell
     }
     
@@ -193,8 +214,9 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
     private func createButtonsSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(68), heightDimension: .absolute(68))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.2))
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.55))
         let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
+        layoutGroup.interItemSpacing = .fixed(15.0)
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         
         return layoutSection
