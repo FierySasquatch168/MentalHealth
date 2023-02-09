@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3736454729953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3736454629953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift */; };
 		3743631829939E41004FFB76 /* MoodImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3743631729939E41004FFB76 /* MoodImageView.swift */; };
 		3743631A2993DAC2004FFB76 /* ReasonButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374363192993DAC2004FFB76 /* ReasonButtonModel.swift */; };
 		3743631C2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */; };
@@ -56,6 +57,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3736454629953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomDiaryModuleVC+Extension.swift"; sourceTree = "<group>"; };
 		3743631729939E41004FFB76 /* MoodImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodImageView.swift; sourceTree = "<group>"; };
 		374363192993DAC2004FFB76 /* ReasonButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonButtonModel.swift; sourceTree = "<group>"; };
 		3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCustomCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				37CBE9A229925EB6002F7E34 /* CustomReasonButton.swift */,
 				37CBE9A4299261F4002F7E34 /* CustomFont.swift */,
 				37CBE9BF29929EBA002F7E34 /* URL+Extension.swift */,
+				3736454629953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				37CBE9AF29929508002F7E34 /* OAuth2tokenStorage.swift in Sources */,
 				37CBE9B12992951E002F7E34 /* OAuth2Service.swift in Sources */,
 				37CBE9D72992A560002F7E34 /* AlertPresenterProtocol.swift in Sources */,
+				3736454729953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift in Sources */,
 				37CBE98129925175002F7E34 /* MentalHealth.xcdatamodeld in Sources */,
 				37CBE9CD2992A274002F7E34 /* ProfileViewController.swift in Sources */,
 				37CBE9D32992A53C002F7E34 /* AlertPresenter.swift in Sources */,

@@ -8,10 +8,7 @@
 import UIKit
 import CoreData
 
-class DiaryViewController: UIViewController {
-    
-    // reference to the managed context
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+class DiaryViewController: DiaryModuleViewController {
 
     private var updatedNotes: [MoodNote] = [] {
         didSet {
@@ -102,6 +99,8 @@ class DiaryViewController: UIViewController {
 
         setupUI()
         
+        print("NavigationController nib name is \(self.navigationController?.viewControllers)")
+        
         // get items from CoreData
         fetchNotesFromCoreData()
         
@@ -113,7 +112,7 @@ class DiaryViewController: UIViewController {
         setupAddButton()
     }
     
-    // MARK: Private funcs
+    // MARK: @Objc funcs
     
     @objc private func addNewNote() {
         let nextVC = AddMoodViewController()

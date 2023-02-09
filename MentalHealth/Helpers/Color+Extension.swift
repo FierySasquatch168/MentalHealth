@@ -16,7 +16,7 @@ extension UIColor {
     static var customButtonPurple: UIColor? { UIColor(named: "customButtonPurple") }
     static var customCVBackground: UIColor? { UIColor(named: "customCVBackground")}
     static var customDeepBlue: UIColor? { UIColor(named: "customDeepBlue")}
-    static var customStroke: UIColor? { UIColor(named: "customStroke")}
+    static var customTextView: UIColor? { UIColor(named: "customTextView")}
     static var customDate: UIColor? { UIColor(named: "customDate")}
 
 

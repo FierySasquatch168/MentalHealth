@@ -7,16 +7,12 @@
 
 import UIKit
 
-class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol {
+class MoodBoardViewController: DiaryModuleViewController, UpdatingDataControllerProtocol {
     
     private typealias DataSource = UICollectionViewDiffableDataSource<String, ReasonButtonModel>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<String, ReasonButtonModel>
-  
-    // Reference to managed context
-    let context = (UIApplication.shared.delegate as! AppDelegate)
     
     // Protocol conformance
-    // MARK: Переписать свойства, они сейчас не связаны с UI
     var updatingData: [MoodNote] = []
     var mood: UIImage?
     var backgroundImage: UIImage?
@@ -35,6 +31,8 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
     ]
     private var buttonsForCollectionView: [ReasonButtonModel] = []
     private var sections = ["Main"]
+    private let moodBackgroundChoice = ["Happy":"Rectangle 15", "Resentment":"Rectangle 14"]
+    private var chosenReasons = [String]()
     
     // Delegate
     var handleUpdatedDataDelegate: ReasonsUpdateDelegate?
@@ -43,7 +41,7 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
     private var collectionView: UICollectionView?
     private var dataSource: DataSource!
     
-    // MARK: Lazy properties
+    // MARK: TOP lazy properties
     
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
@@ -110,6 +108,38 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
         return stackView
     }()
     
+    // MARK: Bottom lazy properties
+    
+    private lazy var bottomSheet: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .customTextView
+        button.setTitleColor(.customDate, for: .normal)
+        let title = "Write down your thoughts"
+        let attribute = [NSAttributedString.Key.font: UIFont(name: CustomFont.InterLight.rawValue, size: 14)]
+        let attributedTitle = NSAttributedString(string: title, attributes: attribute as [NSAttributedString.Key : Any])
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.layer.cornerRadius = 32
+        button.contentVerticalAlignment = .top
+        button.contentHorizontalAlignment = .leading
+        button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 28, bottom: 0, right: 0)
+        return button
+    }()
+    
+    private lazy var bottomRectangle: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "Rectangle 13")
+        imageView.contentMode = .scaleToFill
+        return imageView
+    }()
+    
+    private lazy var saveButton: BottomActionButton = {
+        let button = BottomActionButton(color: .customPurple ?? .black, title: "Save")
+        button.layer.cornerRadius = 14
+        button.addTarget(self, action: #selector(saveDidTapped), for: .touchUpInside)
+        
+        return button
+    }()
+    
     
     // MARK: Lifecycle
     
@@ -117,17 +147,17 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
         super.viewDidLoad()
 
         view.backgroundColor = .white
-        
-        setupUI()
+                
+        setupUpperUI()
         setupCollectionView()
         createDataSourceMockModel()
         createDataSource()
-        setDateAndTimeOfNote()
+        setupLowerUI()
         
     }
     
     private func setDateAndTimeOfNote() {
-        // Формируем дату в нужном виде
+        // Form custom date
         let dayNow = Date()
         let dayFormatter = DateFormatter()
         dayFormatter.dateFormat = "dd"
@@ -165,7 +195,7 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
             collectionView.topAnchor.constraint(equalTo: tellMeLabel.bottomAnchor, constant: 38),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -200)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -190)
         ])
         
         // MARK: UICV cells registration
@@ -174,21 +204,16 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
     
     private func createDataSource() {
         guard let collectionView = collectionView else { return }
-        print("createDataSource starts")
         dataSource = DataSource(collectionView: collectionView, cellProvider: { [unowned self] (collectionView, indexPath, itemIdentifier) in
-            print("createDataSource works")
             return self.cell(collectionView: collectionView, indexPath: indexPath, item: itemIdentifier)
         })
         
         dataSource.apply(createSnapshot())
-        print("snapshot applied")
     }
     
     private func cell(collectionView: UICollectionView, indexPath: IndexPath, item: ReasonButtonModel) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReasonCustomCollectionViewCell.reuseIdentifier, for: indexPath) as? ReasonCustomCollectionViewCell else { fatalError("Can not configure custom CV cell in MoodBoardVC") }
-        print("private func cell works")
         cell.setCellWithValuesOf(item: item)
-        print("cell.setCellWithValuesOf works")
         return cell
     }
     
@@ -229,13 +254,50 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
         dismiss(animated: true)
     }
     
+    @objc private func saveDidTapped() {
+        // Data for transfer
+        let newNote = MoodNote(context: self.context)
+        newNote.day = setTheDateForNote(with: "dd")
+        newNote.month = setTheDateForNote(with: "LLL")
+        newNote.time = setTheDateForNote(with: "HH:mm")
+        
+        guard let moodLabelText = topMoodLabel.text,
+                let moodImage = UIImage(named: moodLabelText),
+                let backgroundImage = UIImage(named: moodBackgroundChoice[moodLabelText]!)
+        else { return }
+        
+        newNote.mood = moodImage
+        newNote.backgroundImage = backgroundImage
+        newNote.moodDescription = moodLabelText
+        newNote.reasonsDescription = chosenReasons.joined(separator: ", ")
+        
+        // Handle data to delegate
+        handleUpdatedDataDelegate?.saveNote(data: newNote)
+                
+        // Return to rootVC
+        goToRootVC()
+    }
+    
+    // MARK: Private funcs
+    
+    private func goToRootVC() {
+        self.dismiss(animated: true)
+    }
+    
     // MARK: UI setup
     
-    private func setupUI() {
+    private func setupUpperUI() {
         setupTopImageView()
         setupTopMoodAndDateStackView()
         setupTellMeLabel()
         setupDismissButton()
+        setDateAndTimeOfNote()
+    }
+    
+    private func setupLowerUI() {
+        setupBottomSheet()
+        setupBottomRectangle()
+        setupSaveButton()
     }
     
     private func setupTopImageView() {
@@ -280,6 +342,44 @@ class MoodBoardViewController: UIViewController, UpdatingDataControllerProtocol 
         NSLayoutConstraint.activate([
             dismissButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25),
             dismissButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5)
+        ])
+    }
+    
+    private func setupBottomSheet() {
+        view.addSubview(bottomSheet)
+        bottomSheet.translatesAutoresizingMaskIntoConstraints = false
+        
+        guard let collectionView = collectionView else { return }
+        
+        NSLayoutConstraint.activate([
+            bottomSheet.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 37),
+            bottomSheet.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 27),
+            bottomSheet.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -27),
+            bottomSheet.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    private func setupBottomRectangle() {
+        view.addSubview(bottomRectangle)
+        bottomRectangle.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            bottomRectangle.topAnchor.constraint(equalTo: bottomSheet.topAnchor, constant: 50),
+            bottomRectangle.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomRectangle.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bottomRectangle.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    private func setupSaveButton() {
+        view.addSubview(saveButton)
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            saveButton.heightAnchor.constraint(equalToConstant: 65),
+            saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 115),
+            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -115),
+            saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 

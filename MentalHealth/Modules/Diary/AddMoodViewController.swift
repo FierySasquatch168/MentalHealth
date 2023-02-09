@@ -7,11 +7,9 @@
 
 import UIKit
 
-class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDataControllerProtocol {
+class AddMoodViewController: DiaryModuleViewController, ReasonsUpdateDelegate, UpdatingDataControllerProtocol {
     
-    // Reference to managed context
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
+    // Protocol conformance
     var updatingData: [MoodNote] = []
     var mood: UIImage?
     var backgroundImage: UIImage?
@@ -142,6 +140,8 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
         
         view.backgroundColor = .white
         
+        print("NavigationController nib name is \(self.navigationController?.viewControllers)")
+        
         setupUI()
         pickerViewSetup()
         setupMoodLabel()
@@ -194,7 +194,7 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
         // set self as the delegate
         nextVC.handleUpdatedDataDelegate = self
         
-        self.present(nextVC, animated: true)
+        goToNextVC(viewController: nextVC)
     }
     
     @objc private func saveNoteWithoutDetails() {
@@ -203,6 +203,10 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
     }
     
     // MARK: Private funcs
+    
+    private func goToNextVC(viewController: UIViewController) {
+        navigationController?.present(viewController, animated: true)
+    }
     
     private func saveWithoutDetails() {
         // make data for transfer
@@ -215,7 +219,7 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
         
         let newNote = formNewNote()
         newNote.mood = moodImage
-        newNote.backGroundImage = backgroundImage
+        newNote.backgroundImage = backgroundImage
         newNote.moodDescription = moodLabelText
         newNote.reasonsDescription = "You preferred not to describe your feelings"
         
@@ -224,24 +228,6 @@ class AddMoodViewController: UIViewController, ReasonsUpdateDelegate, UpdatingDa
         
         // go to rootVC
         self.navigationController?.popToRootViewController(animated: true)
-    }
-    
-    private func formNewNote() -> MoodNote {
-        let newNote = MoodNote(context: self.context)
-        newNote.day = setTheDate(with: "dd")
-        newNote.month = setTheDate(with: "LLL")
-        newNote.time = setTheDate(with: "HH:mm")
-
-        return newNote
-    }
-    
-    private func setTheDate(with dateFormat: String) -> String {
-        let dateNow = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = dateFormat
-        let date = dateFormatter.string(from: dateNow)
-        
-        return date
     }
     
     // MARK: UI setup

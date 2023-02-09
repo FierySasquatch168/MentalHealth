@@ -33,7 +33,6 @@ class ReasonCustomCollectionViewCell: UICollectionViewCell {
     
     func setCellWithValuesOf(item: ReasonButtonModel) {
         self.backgroundColor = .clear
-        print("setCellWithValuesOf works")
         reasonButton.setImage(UIImage(named: item.imageName), for: .normal)
         buttonTitle.text = item.buttonTitle
     }
@@ -48,7 +47,6 @@ class ReasonCustomCollectionViewCell: UICollectionViewCell {
     private func setupButton() {
         contentView.addSubview(reasonButton)
         reasonButton.translatesAutoresizingMaskIntoConstraints = false
-        print("setupButton works")
 
         NSLayoutConstraint.activate([
             reasonButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
@@ -60,7 +58,6 @@ class ReasonCustomCollectionViewCell: UICollectionViewCell {
     private func setupButtonTitleLabel() {
         contentView.addSubview(buttonTitle)
         buttonTitle.translatesAutoresizingMaskIntoConstraints = false
-        print("setupButtonTitleLabel works")
         NSLayoutConstraint.activate([
             buttonTitle.topAnchor.constraint(equalTo: reasonButton.bottomAnchor, constant: 5),
             buttonTitle.leadingAnchor.constraint(equalTo: reasonButton.leadingAnchor),

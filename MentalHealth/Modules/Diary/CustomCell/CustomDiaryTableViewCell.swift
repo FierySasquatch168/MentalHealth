@@ -172,7 +172,7 @@ class CustomDiaryTableViewCell: UITableViewCell {
     }
     
     func set(note: MoodNote) {
-        backgroundImage.image = note.backGroundImage
+        backgroundImage.image = note.backgroundImage
         dayLabel.text = note.day
         timeLabel.text = note.time
         moodImage.image = note.mood
