@@ -140,14 +140,14 @@
 		37CBE97529925175002F7E34 /* MentalHealth */ = {
 			isa = PBXGroup;
 			children = (
+				37CBE97629925175002F7E34 /* AppDelegate.swift */,
+				37CBE97829925175002F7E34 /* SceneDelegate.swift */,
 				37CBE9D12992A522002F7E34 /* AlertPresenter */,
 				37CBE9AA29929314002F7E34 /* Modules */,
 				37CBE99F29925699002F7E34 /* Models */,
 				37CBE99E29925633002F7E34 /* Service */,
 				37CBE994299254D2002F7E34 /* Resources */,
 				37CBE98D299252A1002F7E34 /* Helpers */,
-				37CBE97629925175002F7E34 /* AppDelegate.swift */,
-				37CBE97829925175002F7E34 /* SceneDelegate.swift */,
 				37CBE98229925176002F7E34 /* Assets.xcassets */,
 				37CBE98729925176002F7E34 /* Info.plist */,
 				37CBE97F29925175002F7E34 /* MentalHealth.xcdatamodeld */,
