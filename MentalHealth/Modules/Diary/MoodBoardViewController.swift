@@ -37,8 +37,12 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     // Delegate
     var handleUpdatedDataDelegate: ReasonsUpdateDelegate?
     
-    // CollectionView and dataSource
-    private var collectionView: UICollectionView?
+    // CollectionView and DataSource
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
+        return collectionView
+    }()
+    
     private var dataSource: DataSource!
     
     // MARK: TOP lazy properties
@@ -122,6 +126,7 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         button.contentVerticalAlignment = .top
         button.contentHorizontalAlignment = .leading
         button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 28, bottom: 0, right: 0)
+        button.addTarget(self, action: #selector(didTapBottomSheet), for: .touchUpInside)
         return button
     }()
     
@@ -186,8 +191,6 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     // MARK: CollectionView setup
     
     private func setupCollectionView() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
-        guard let collectionView = collectionView else { return }
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -198,22 +201,26 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -190)
         ])
         
-        // MARK: UICV cells registration
         collectionView.register(ReasonCustomCollectionViewCell.self, forCellWithReuseIdentifier: ReasonCustomCollectionViewCell.reuseIdentifier)
+        
+        collectionView.delegate = self
+        collectionView.showsVerticalScrollIndicator = false
     }
     
+    // MARK: UICV dataSource setup
     private func createDataSource() {
-        guard let collectionView = collectionView else { return }
         dataSource = DataSource(collectionView: collectionView, cellProvider: { [unowned self] (collectionView, indexPath, itemIdentifier) in
             return self.cell(collectionView: collectionView, indexPath: indexPath, item: itemIdentifier)
         })
-        
+                
         dataSource.apply(createSnapshot())
+        
     }
     
     private func cell(collectionView: UICollectionView, indexPath: IndexPath, item: ReasonButtonModel) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReasonCustomCollectionViewCell.reuseIdentifier, for: indexPath) as? ReasonCustomCollectionViewCell else { fatalError("Can not configure custom CV cell in MoodBoardVC") }
         cell.setCellWithValuesOf(item: item)
+        
         return cell
     }
     
@@ -276,6 +283,14 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
                 
         // Return to rootVC
         goToRootVC()
+    }
+    
+    @objc private func didTapBottomSheet() {
+        print("didTapBottomSheet tap")
+    }
+    
+    @objc private func didTapCollectionViewCell() {
+        print("didTapCollectionViewCell tap")
     }
     
     // MARK: Private funcs
@@ -348,9 +363,7 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     private func setupBottomSheet() {
         view.addSubview(bottomSheet)
         bottomSheet.translatesAutoresizingMaskIntoConstraints = false
-        
-        guard let collectionView = collectionView else { return }
-        
+                
         NSLayoutConstraint.activate([
             bottomSheet.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 37),
             bottomSheet.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 27),
@@ -385,6 +398,32 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
 
 }
 
-extension MoodBoardViewController: UICollectionViewDelegate {
+extension MoodBoardViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        true
+    }
     
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ReasonCustomCollectionViewCell else { fatalError() }
+        cell.backgroundColor = .yellow
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ReasonCustomCollectionViewCell else { fatalError() }
+        cell.backgroundColor = .clear
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
+        switch item.button.backgroundColor {
+        case UIColor.customButtonPurple:
+            chosenReasons.append(item.buttonTitle)
+        case UIColor.customPurple:
+            if !chosenReasons.isEmpty {
+                chosenReasons.removeAll(where: { $0 == item.buttonTitle })
+            }
+        default:
+            print("Error didSelectItemAt")
+        }
+    }
 }

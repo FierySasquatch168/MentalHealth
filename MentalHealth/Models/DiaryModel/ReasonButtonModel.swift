@@ -8,7 +8,7 @@
 import UIKit
 
 struct ReasonButtonModel: Hashable, Identifiable {
-    let id = UUID()
+    let id = UUID().uuidString
     let button: CustomReasonButton
     let imageName: String
     let buttonTitle: String
