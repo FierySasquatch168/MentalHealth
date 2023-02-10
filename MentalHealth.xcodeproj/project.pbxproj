@@ -202,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				37CBE9B8299297BA002F7E34 /* Constants.swift */,
+				37CBE9E02992B6A5002F7E34 /* DiaryModel */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -299,7 +300,6 @@
 			children = (
 				37CBE9DE2992B68E002F7E34 /* CustomCell */,
 				37CBE9DF2992B696002F7E34 /* Service */,
-				37CBE9E02992B6A5002F7E34 /* Model */,
 				37CBE9C62992A22C002F7E34 /* DiaryViewController.swift */,
 				37CBE9E72992D4B3002F7E34 /* AddMoodViewController.swift */,
 				37CBE9E92992E078002F7E34 /* MoodBoardViewController.swift */,
@@ -347,7 +347,7 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
-		37CBE9E02992B6A5002F7E34 /* Model */ = {
+		37CBE9E02992B6A5002F7E34 /* DiaryModel */ = {
 			isa = PBXGroup;
 			children = (
 				37CBE9E12992B6EE002F7E34 /* DataUpdateModel.swift */,
@@ -355,7 +355,7 @@
 				3743631729939E41004FFB76 /* MoodImageView.swift */,
 				374363192993DAC2004FFB76 /* ReasonButtonModel.swift */,
 			);
-			path = Model;
+			path = DiaryModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
