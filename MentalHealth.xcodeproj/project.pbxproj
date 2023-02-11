@@ -14,7 +14,6 @@
 		3738D4F529980523006EB6C4 /* LibraryCustomPopularCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4F429980523006EB6C4 /* LibraryCustomPopularCell.swift */; };
 		3738D4F729980537006EB6C4 /* LibraryCustomNewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4F629980537006EB6C4 /* LibraryCustomNewCell.swift */; };
 		3738D4FA29980BBE006EB6C4 /* FetchedArticles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4F929980BBE006EB6C4 /* FetchedArticles.swift */; };
-		3738D4FC29980C45006EB6C4 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4FB29980C45006EB6C4 /* NetworkClient.swift */; };
 		3738D50029980EBB006EB6C4 /* ArticleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4FF29980EBB006EB6C4 /* ArticleFactory.swift */; };
 		3738D50229980F0D006EB6C4 /* ArticleFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D50129980F0D006EB6C4 /* ArticleFactoryProtocol.swift */; };
 		3738D50429980F2F006EB6C4 /* ArticleFactoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D50329980F2F006EB6C4 /* ArticleFactoryDelegate.swift */; };
@@ -75,7 +74,6 @@
 		3738D4F429980523006EB6C4 /* LibraryCustomPopularCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCustomPopularCell.swift; sourceTree = "<group>"; };
 		3738D4F629980537006EB6C4 /* LibraryCustomNewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCustomNewCell.swift; sourceTree = "<group>"; };
 		3738D4F929980BBE006EB6C4 /* FetchedArticles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedArticles.swift; sourceTree = "<group>"; };
-		3738D4FB29980C45006EB6C4 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		3738D4FF29980EBB006EB6C4 /* ArticleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleFactory.swift; sourceTree = "<group>"; };
 		3738D50129980F0D006EB6C4 /* ArticleFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleFactoryProtocol.swift; sourceTree = "<group>"; };
 		3738D50329980F2F006EB6C4 /* ArticleFactoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleFactoryDelegate.swift; sourceTree = "<group>"; };
@@ -144,9 +142,7 @@
 		3738D4ED29980397006EB6C4 /* AnalyticsModel */ = {
 			isa = PBXGroup;
 			children = (
-				3738D4EE299803A7006EB6C4 /* Headers */,
-				3738D4F329980503006EB6C4 /* CustomCells */,
-				3738D4F829980BA5006EB6C4 /* Articles */,
+				3738D4F929980BBE006EB6C4 /* FetchedArticles.swift */,
 			);
 			path = AnalyticsModel;
 			sourceTree = "<group>";
@@ -167,14 +163,6 @@
 				3738D4F629980537006EB6C4 /* LibraryCustomNewCell.swift */,
 			);
 			path = CustomCells;
-			sourceTree = "<group>";
-		};
-		3738D4F829980BA5006EB6C4 /* Articles */ = {
-			isa = PBXGroup;
-			children = (
-				3738D4F929980BBE006EB6C4 /* FetchedArticles.swift */,
-			);
-			path = Articles;
 			sourceTree = "<group>";
 		};
 		3738D4FD29980DC0006EB6C4 /* Extensions */ = {
@@ -200,6 +188,56 @@
 			path = Factory;
 			sourceTree = "<group>";
 		};
+		3738D50729983958006EB6C4 /* AuthorizationModel */ = {
+			isa = PBXGroup;
+			children = (
+				37CBE9BD29929E2C002F7E34 /* Profile.swift */,
+				37CBE9BA29929E12002F7E34 /* ProfileService.swift */,
+				37CBE9C12992A0DB002F7E34 /* OAuthResponseBody.swift */,
+				37CBE9B02992951E002F7E34 /* OAuth2Service.swift */,
+				37CBE9AE29929508002F7E34 /* OAuth2tokenStorage.swift */,
+			);
+			path = AuthorizationModel;
+			sourceTree = "<group>";
+		};
+		3738D50829983C2A006EB6C4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3738D50A29983CE9006EB6C4 /* DiaryViews */,
+				3738D50929983CD0006EB6C4 /* AnalyticsViews */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3738D50929983CD0006EB6C4 /* AnalyticsViews */ = {
+			isa = PBXGroup;
+			children = (
+				3738D4EE299803A7006EB6C4 /* Headers */,
+				3738D4F329980503006EB6C4 /* CustomCells */,
+			);
+			path = AnalyticsViews;
+			sourceTree = "<group>";
+		};
+		3738D50A29983CE9006EB6C4 /* DiaryViews */ = {
+			isa = PBXGroup;
+			children = (
+				37CBE9E52992B97A002F7E34 /* CustomDiaryTableViewCell.swift */,
+				3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */,
+				3743631729939E41004FFB76 /* MoodImageView.swift */,
+			);
+			path = DiaryViews;
+			sourceTree = "<group>";
+		};
+		3738D50C29983E2D006EB6C4 /* AlertModel */ = {
+			isa = PBXGroup;
+			children = (
+				37CBE9D42992A54E002F7E34 /* AlertModel.swift */,
+				37CBE9D62992A560002F7E34 /* AlertPresenterProtocol.swift */,
+				37CBE9D82992A571002F7E34 /* AlertPresenterDelegate.swift */,
+			);
+			path = AlertModel;
+			sourceTree = "<group>";
+		};
 		37CBE96A29925175002F7E34 = {
 			isa = PBXGroup;
 			children = (
@@ -223,9 +261,10 @@
 			children = (
 				37CBE97629925175002F7E34 /* AppDelegate.swift */,
 				37CBE97829925175002F7E34 /* SceneDelegate.swift */,
-				37CBE9D12992A522002F7E34 /* AlertPresenter */,
-				37CBE9AA29929314002F7E34 /* Modules */,
+				37CBE9D12992A522002F7E34 /* Presenter */,
+				37CBE9AA29929314002F7E34 /* Controllers */,
 				37CBE99F29925699002F7E34 /* Models */,
+				3738D50829983C2A006EB6C4 /* Views */,
 				37CBE99E29925633002F7E34 /* Service */,
 				37CBE994299254D2002F7E34 /* Resources */,
 				37CBE98D299252A1002F7E34 /* Helpers */,
@@ -280,14 +319,15 @@
 			isa = PBXGroup;
 			children = (
 				37CBE9B8299297BA002F7E34 /* Constants.swift */,
-				3738D4FB29980C45006EB6C4 /* NetworkClient.swift */,
+				3738D50729983958006EB6C4 /* AuthorizationModel */,
 				37CBE9E02992B6A5002F7E34 /* DiaryModel */,
 				3738D4ED29980397006EB6C4 /* AnalyticsModel */,
+				3738D50C29983E2D006EB6C4 /* AlertModel */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		37CBE9AA29929314002F7E34 /* Modules */ = {
+		37CBE9AA29929314002F7E34 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				37CBE9C32992A1A7002F7E34 /* TabBar */,
@@ -298,54 +338,17 @@
 				37CBE9DC2992ABE2002F7E34 /* Library */,
 				37CBE9DD2992ABEB002F7E34 /* Profile */,
 			);
-			path = Modules;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		37CBE9AB2992931F002F7E34 /* Authorization */ = {
-			isa = PBXGroup;
-			children = (
-				37CBE9BC29929E1D002F7E34 /* ProfileService */,
-				37CBE9B7299297B0002F7E34 /* Model */,
-				37CBE9B229929620002F7E34 /* AuthViewController */,
-				37CBE9AD29929382002F7E34 /* NetworkClient */,
-			);
-			path = Authorization;
-			sourceTree = "<group>";
-		};
-		37CBE9AD29929382002F7E34 /* NetworkClient */ = {
-			isa = PBXGroup;
-			children = (
-				37CBE9AE29929508002F7E34 /* OAuth2tokenStorage.swift */,
-				37CBE9B02992951E002F7E34 /* OAuth2Service.swift */,
-			);
-			path = NetworkClient;
-			sourceTree = "<group>";
-		};
-		37CBE9B229929620002F7E34 /* AuthViewController */ = {
 			isa = PBXGroup;
 			children = (
 				37CBE97A29925175002F7E34 /* LoginViewController.swift */,
 				37CBE9B32992965C002F7E34 /* WebViewViewController.swift */,
 				37CBE9B529929673002F7E34 /* WebViewControllerDelegate.swift */,
 			);
-			path = AuthViewController;
-			sourceTree = "<group>";
-		};
-		37CBE9B7299297B0002F7E34 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				37CBE9BD29929E2C002F7E34 /* Profile.swift */,
-				37CBE9C12992A0DB002F7E34 /* OAuthResponseBody.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		37CBE9BC29929E1D002F7E34 /* ProfileService */ = {
-			isa = PBXGroup;
-			children = (
-				37CBE9BA29929E12002F7E34 /* ProfileService.swift */,
-			);
-			path = ProfileService;
+			path = Authorization;
 			sourceTree = "<group>";
 		};
 		37CBE9C32992A1A7002F7E34 /* TabBar */ = {
@@ -364,21 +367,17 @@
 			path = SplashScreen;
 			sourceTree = "<group>";
 		};
-		37CBE9D12992A522002F7E34 /* AlertPresenter */ = {
+		37CBE9D12992A522002F7E34 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
 				37CBE9D22992A53C002F7E34 /* AlertPresenter.swift */,
-				37CBE9D42992A54E002F7E34 /* AlertModel.swift */,
-				37CBE9D62992A560002F7E34 /* AlertPresenterProtocol.swift */,
-				37CBE9D82992A571002F7E34 /* AlertPresenterDelegate.swift */,
 			);
-			path = AlertPresenter;
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 		37CBE9DA2992ABAC002F7E34 /* Diary */ = {
 			isa = PBXGroup;
 			children = (
-				37CBE9DE2992B68E002F7E34 /* CustomCell */,
 				37CBE9C62992A22C002F7E34 /* DiaryViewController.swift */,
 				37CBE9E72992D4B3002F7E34 /* AddMoodViewController.swift */,
 				37CBE9E92992E078002F7E34 /* MoodBoardViewController.swift */,
@@ -411,21 +410,11 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		37CBE9DE2992B68E002F7E34 /* CustomCell */ = {
-			isa = PBXGroup;
-			children = (
-				37CBE9E52992B97A002F7E34 /* CustomDiaryTableViewCell.swift */,
-				3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */,
-			);
-			path = CustomCell;
-			sourceTree = "<group>";
-		};
 		37CBE9E02992B6A5002F7E34 /* DiaryModel */ = {
 			isa = PBXGroup;
 			children = (
 				37CBE9E12992B6EE002F7E34 /* DataUpdateModel.swift */,
 				37CBE9E32992B760002F7E34 /* MoodPickerModel.swift */,
-				3743631729939E41004FFB76 /* MoodImageView.swift */,
 				374363192993DAC2004FFB76 /* ReasonButtonModel.swift */,
 			);
 			path = DiaryModel;
@@ -513,7 +502,6 @@
 				3738D50229980F0D006EB6C4 /* ArticleFactoryProtocol.swift in Sources */,
 				3738D4F0299803DE006EB6C4 /* LibraryCustomHeaderForCellReusableView.swift in Sources */,
 				37CBE9BE29929E2C002F7E34 /* Profile.swift in Sources */,
-				3738D4FC29980C45006EB6C4 /* NetworkClient.swift in Sources */,
 				37CBE9A329925EB6002F7E34 /* CustomReasonButton.swift in Sources */,
 				37CBE9AF29929508002F7E34 /* OAuth2tokenStorage.swift in Sources */,
 				37CBE9B12992951E002F7E34 /* OAuth2Service.swift in Sources */,

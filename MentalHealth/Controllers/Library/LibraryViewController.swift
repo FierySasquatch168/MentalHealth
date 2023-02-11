@@ -13,6 +13,7 @@ class LibraryViewController: UIViewController {
     private typealias Snapshot = NSDiffableDataSourceSnapshot<String, Article>
     
     // MARK: Dataflow
+    private let constants = Constants.shared
     private var articleFactory: ArticleFactoryProtocol?
     private var articles: [Article] = []
     private var popularArticles: [Article] = []
@@ -40,14 +41,14 @@ class LibraryViewController: UIViewController {
     private var backGroundTopImage: UIImageView = {
         let topImage = UIImageView()
         topImage.backgroundColor = .clear
-        topImage.image = UIImage(named: "Ellipse 2")
+        topImage.image = UIImage(named: "backgroundTopmGradientImage")
         return topImage
     }()
     
     private var backgroundBottomImage: UIImageView = {
         let bottomImage = UIImageView()
         bottomImage.backgroundColor = .clear
-        bottomImage.image = UIImage(named: "Ellipse 1")
+        bottomImage.image = UIImage(named: "backgroundBottomGradientImage")
         return bottomImage
     }()
     
@@ -73,6 +74,14 @@ class LibraryViewController: UIViewController {
     
     private func setupCollectionView() {
         view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -37)
+        ])
         
     }
     
@@ -103,6 +112,8 @@ class LibraryViewController: UIViewController {
         
     }
     
+    // MARK: Cell configuration
+    
     private func cell(collectionView: UICollectionView, indexPath: IndexPath, item: Article) -> UICollectionViewCell {
         switch headers[indexPath.section] {
         case "New":
@@ -120,6 +131,8 @@ class LibraryViewController: UIViewController {
         }
     }
     
+    // MARK: Snapshot
+    
     private func createSnapshot() -> Snapshot {
         var snapshot = Snapshot()
         snapshot.appendSections(headers)
@@ -128,6 +141,17 @@ class LibraryViewController: UIViewController {
         snapshot.appendItems(newArticle, toSection: headers[2])
         return snapshot
     }
+    
+    // MARK: Layout
+    
+    private func createCompositionalLayout() -> UICollectionViewLayout {
+        return UICollectionViewCompositionalLayout { [unowned self] sectionIndex, environment in
+            return self.sectionFor(index: sectionIndex, environment: environment)
+            
+        }
+    }
+    
+    // MARK: Sections
     
     private func sectionFor(index: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         let section = headers[index]
@@ -139,13 +163,6 @@ class LibraryViewController: UIViewController {
             return createPopularArticlesSection()
         default:
             return createNewArticlesSection()
-        }
-    }
-    
-    private func createCompositionalLayout() -> UICollectionViewLayout {
-        return UICollectionViewCompositionalLayout { [unowned self] sectionIndex, environment in
-            return self.sectionFor(index: sectionIndex, environment: environment)
-            
         }
     }
     
@@ -184,6 +201,8 @@ class LibraryViewController: UIViewController {
 
         return section
     }
+    
+    // MARK: Header
     
     private func addStandardHeader(toSection section: NSCollectionLayoutSection) {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))

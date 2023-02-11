@@ -28,6 +28,10 @@ class LibraryCustomInspirationCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setCellWithValuesOf(_ article: Article) {
+        
+    }
+    
     private func setupArticleImageView() {
         contentView.addSubview(articleImageView)
         articleImageView.translatesAutoresizingMaskIntoConstraints = false

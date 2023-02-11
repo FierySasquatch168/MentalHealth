@@ -16,12 +16,12 @@ struct ArticlesLoader: ArticlesLoading {
     func loadArticles(url: URL, handler: @escaping (Result<[Article], Error>) -> Void) {
         let request = URLRequest(url: url)
         let session = URLSession.shared
-        let task = session.objectTask(for: request) { (result: Result<[Article], Error>) in
+        let task = session.objectTask(for: request) { (result: Result<APIResponse, Error>) in
             switch result {
             case .failure(let error):
                 handler(.failure(error))
-            case .success(let articles):
-                handler(.success(articles))
+            case .success(let response):
+                handler(.success(response.articles))
             }
         }
         task.resume()

@@ -8,6 +8,7 @@
 import Foundation
 
 struct Constants {
+    static let shared = Constants()
     let accessKey = "FRBSEMoZbgqUKkLShrsxfilHFnKibFUZI8yuI8LEBXE"
     let secretKey = "3yaEFpg_fJSpPQUFO3-peaSjU2ztI9_hbOJXAhh11dM"
     let redirectURI = "urn:ietf:wg:oauth:2.0:oob"

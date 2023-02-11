@@ -8,11 +8,13 @@
 import Foundation
 
 struct APIResponse: Decodable, Hashable {
+    let status: String?
+    let totalResults: Int?
     let articles: [Article]
 }
 
-struct Article: Decodable, Hashable {
-    var id = UUID()
+struct Article: Decodable, Hashable, Identifiable {
+    let id = UUID()
     let title: String?
     let url: String?
     let urlToImage: String?

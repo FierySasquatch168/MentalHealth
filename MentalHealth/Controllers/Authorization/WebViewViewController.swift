@@ -12,6 +12,7 @@ class WebViewViewController: UIViewController {
     
     private let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
     private var estimatedProgressObservation: NSKeyValueObservation?
+    private let constants = Constants.shared
     
     weak var authDelegate: WebViewViewControllerDelegate?
     
@@ -85,10 +86,10 @@ class WebViewViewController: UIViewController {
     private func setupURLComponents() {
         var urlComponents = URLComponents(string: unsplashAuthorizeURLString)
         urlComponents?.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants().accessKey),
-            URLQueryItem(name: "redirect_uri", value: Constants().redirectURI),
+            URLQueryItem(name: "client_id", value: constants.accessKey),
+            URLQueryItem(name: "redirect_uri", value: constants.redirectURI),
             URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: Constants().accessScope)
+            URLQueryItem(name: "scope", value: constants.accessScope)
         ]
         guard let url = urlComponents?.url else { return }
         
