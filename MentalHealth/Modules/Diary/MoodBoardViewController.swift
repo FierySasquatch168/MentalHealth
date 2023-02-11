@@ -39,7 +39,9 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     
     // CollectionView and DataSource
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        collectionView.register(ReasonCustomCollectionViewCell.self, forCellWithReuseIdentifier: ReasonCustomCollectionViewCell.reuseIdentifier)
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
     
@@ -155,8 +157,10 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
                 
         setupUpperUI()
         setupCollectionView()
+        
         createDataSourceMockModel()
         createDataSource()
+        
         setupLowerUI()
         
     }
@@ -183,7 +187,7 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         let button = CustomReasonButton(color: color)
         
         for (key, value) in collectionViewButtonMockData {
-            let model = ReasonButtonModel(button: button, imageName: value, buttonTitle: key)
+            let model = ReasonButtonModel(button: CustomReasonButton(color: .customButtonPurple ?? .black), imageName: value, buttonTitle: key)
             buttonsForCollectionView.append(model)
         }
     }
@@ -200,11 +204,6 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -190)
         ])
-        
-        collectionView.register(ReasonCustomCollectionViewCell.self, forCellWithReuseIdentifier: ReasonCustomCollectionViewCell.reuseIdentifier)
-        
-        collectionView.delegate = self
-        collectionView.showsVerticalScrollIndicator = false
     }
     
     // MARK: UICV dataSource setup
@@ -213,14 +212,14 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
             return self.cell(collectionView: collectionView, indexPath: indexPath, item: itemIdentifier)
         })
                 
-        dataSource.apply(createSnapshot())
+        dataSource?.apply(createSnapshot())
         
     }
     
     private func cell(collectionView: UICollectionView, indexPath: IndexPath, item: ReasonButtonModel) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReasonCustomCollectionViewCell.reuseIdentifier, for: indexPath) as? ReasonCustomCollectionViewCell else { fatalError("Can not configure custom CV cell in MoodBoardVC") }
         cell.setCellWithValuesOf(item: item)
-        
+        cell.delegate = self
         return cell
     }
     
@@ -233,25 +232,25 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     
     // MARK: Create UICollectionView layouts
     
-    private func sectionFor(index: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-        return createButtonsSection()
-    }
+//    private func sectionFor(index: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+//        return createLayout()
+//    }
+//
+//    private func createCompositionalLayout() -> UICollectionViewLayout {
+//        return UICollectionViewCompositionalLayout { [unowned self] sectionIndex, environment in
+//            return self.sectionFor(index: sectionIndex, environment: environment)
+//        }
+//    }
     
-    private func createCompositionalLayout() -> UICollectionViewLayout {
-        return UICollectionViewCompositionalLayout { [unowned self] sectionIndex, environment in
-            return self.sectionFor(index: sectionIndex, environment: environment)
-        }
-    }
-    
-    private func createButtonsSection() -> NSCollectionLayoutSection {
+    private func createLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(68), heightDimension: .absolute(68))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
         let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.55))
         let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
         layoutGroup.interItemSpacing = .fixed(15.0)
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-        
-        return layoutSection
+        let layout = UICollectionViewCompositionalLayout(section: layoutSection)
+        return layout
         
     }
     
@@ -398,32 +397,14 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
 
 }
 
-extension MoodBoardViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        true
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ReasonCustomCollectionViewCell else { fatalError() }
-        cell.backgroundColor = .yellow
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ReasonCustomCollectionViewCell else { fatalError() }
-        cell.backgroundColor = .clear
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
-        switch item.button.backgroundColor {
-        case UIColor.customButtonPurple:
-            chosenReasons.append(item.buttonTitle)
-        case UIColor.customPurple:
-            if !chosenReasons.isEmpty {
-                chosenReasons.removeAll(where: { $0 == item.buttonTitle })
-            }
-        default:
-            print("Error didSelectItemAt")
+// MARK: Extension CellDelegate
+
+extension MoodBoardViewController: ReasonCustomCollectionViewCellDelegate {
+    func didTapButton(with title: String) {
+        if chosenReasons.contains(title) {
+            chosenReasons.removeAll(where: { $0 == title })
+        } else {
+            chosenReasons.append(title)
         }
     }
 }

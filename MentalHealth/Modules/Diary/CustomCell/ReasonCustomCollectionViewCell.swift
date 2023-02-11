@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol ReasonCustomCollectionViewCellDelegate: AnyObject {
+    func didTapButton(with title: String)
+}
+
 class ReasonCustomCollectionViewCell: UICollectionViewCell {
+    weak var delegate: ReasonCustomCollectionViewCellDelegate?
+    private var buttonTitle: String = ""
     
     var buttonIsSelected: Bool = false
     
@@ -29,6 +35,7 @@ class ReasonCustomCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -37,21 +44,21 @@ class ReasonCustomCollectionViewCell: UICollectionViewCell {
     
     func setCellWithValuesOf(item: ReasonButtonModel) {
         self.backgroundColor = .clear
+        self.buttonTitle = item.buttonTitle
         reasonButton.setImage(UIImage(named: item.imageName), for: .normal)
-        buttonTitleLabel.text = item.buttonTitle
+        buttonTitleLabel.text = buttonTitle
         
     }
     
     @objc func selectButton() {
+        delegate?.didTapButton(with: buttonTitle)
         buttonIsSelected.toggle()
-        
+
         switch buttonIsSelected {
         case true:
             reasonButton.backgroundColor = .customPurple
-            
         case false:
             reasonButton.backgroundColor = .customButtonPurple
-            
         }
     }
     
@@ -77,9 +84,9 @@ class ReasonCustomCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(buttonTitleLabel)
         buttonTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            buttonTitleLabel.topAnchor.constraint(equalTo: reasonButton.bottomAnchor, constant: 5),
-            buttonTitleLabel.leadingAnchor.constraint(equalTo: reasonButton.leadingAnchor),
-            buttonTitleLabel.trailingAnchor.constraint(equalTo: reasonButton.trailingAnchor)
+            buttonTitleLabel.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 5),
+            buttonTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            buttonTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
 }
