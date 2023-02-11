@@ -102,18 +102,6 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         return label
     }()
     
-    // MARK: Middle buttons stackView
-    
-    private lazy var singleButtonStackView: UIStackView = {
-        let stackView = UIStackView()
-        return stackView
-    }()
-    
-    private lazy var topHorizontalButtonStackView: UIStackView = {
-        let stackView = UIStackView()
-        return stackView
-    }()
-    
     // MARK: Bottom lazy properties
     
     private lazy var bottomSheet: UIButton = {
@@ -275,7 +263,7 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         newNote.mood = moodImage
         newNote.backgroundImage = backgroundImage
         newNote.moodDescription = moodLabelText
-        newNote.reasonsDescription = chosenReasons.joined(separator: ", ")
+        newNote.reasonsDescription = chosenReasons.isEmpty ? "You preferred not to describe the reasons" : chosenReasons.joined(separator: ", ")
         
         // Handle data to delegate
         handleUpdatedDataDelegate?.saveNote(data: newNote)
@@ -285,11 +273,8 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     }
     
     @objc private func didTapBottomSheet() {
-        print("didTapBottomSheet tap")
-    }
-    
-    @objc private func didTapCollectionViewCell() {
-        print("didTapCollectionViewCell tap")
+        let singleNoteVC = SingleNoteViewController()
+        self.present(singleNoteVC, animated: true)
     }
     
     // MARK: Private funcs

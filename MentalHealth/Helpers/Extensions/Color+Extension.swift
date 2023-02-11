@@ -18,7 +18,7 @@ extension UIColor {
     static var customDeepBlue: UIColor? { UIColor(named: "customDeepBlue")}
     static var customTextView: UIColor? { UIColor(named: "customTextView")}
     static var customDate: UIColor? { UIColor(named: "customDate")}
-
+    static var customTextField: UIColor? { UIColor(named: "customTextField")}
 
     static var customGreen = UIColor(red: 168/255, green: 234/255, blue: 194/255, alpha: 1.0)
     static var customLighBlue = UIColor(red: 166/255, green: 230/255, blue: 244/255, alpha: 1.0)
