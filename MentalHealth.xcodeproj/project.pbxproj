@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		3736454729953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3736454629953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift */; };
+		3738D4EC2997F7E0006EB6C4 /* SingleNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4EB2997F7E0006EB6C4 /* SingleNoteViewController.swift */; };
+		3738D4F0299803DE006EB6C4 /* LibraryCustomHeaderForCellReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4EF299803DE006EB6C4 /* LibraryCustomHeaderForCellReusableView.swift */; };
+		3738D4F2299804F5006EB6C4 /* LibraryCustomInspirationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4F1299804F5006EB6C4 /* LibraryCustomInspirationCell.swift */; };
+		3738D4F529980523006EB6C4 /* LibraryCustomPopularCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4F429980523006EB6C4 /* LibraryCustomPopularCell.swift */; };
+		3738D4F729980537006EB6C4 /* LibraryCustomNewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4F629980537006EB6C4 /* LibraryCustomNewCell.swift */; };
+		3738D4FA29980BBE006EB6C4 /* FetchedArticles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4F929980BBE006EB6C4 /* FetchedArticles.swift */; };
+		3738D4FC29980C45006EB6C4 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4FB29980C45006EB6C4 /* NetworkClient.swift */; };
+		3738D50029980EBB006EB6C4 /* ArticleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4FF29980EBB006EB6C4 /* ArticleFactory.swift */; };
+		3738D50229980F0D006EB6C4 /* ArticleFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D50129980F0D006EB6C4 /* ArticleFactoryProtocol.swift */; };
+		3738D50429980F2F006EB6C4 /* ArticleFactoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D50329980F2F006EB6C4 /* ArticleFactoryDelegate.swift */; };
+		3738D50629980FB6006EB6C4 /* ArticlesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D50529980FB6006EB6C4 /* ArticlesLoader.swift */; };
 		3743631829939E41004FFB76 /* MoodImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3743631729939E41004FFB76 /* MoodImageView.swift */; };
 		3743631A2993DAC2004FFB76 /* ReasonButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374363192993DAC2004FFB76 /* ReasonButtonModel.swift */; };
 		3743631C2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */; };
@@ -58,6 +69,17 @@
 
 /* Begin PBXFileReference section */
 		3736454629953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomDiaryModuleVC+Extension.swift"; sourceTree = "<group>"; };
+		3738D4EB2997F7E0006EB6C4 /* SingleNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleNoteViewController.swift; sourceTree = "<group>"; };
+		3738D4EF299803DE006EB6C4 /* LibraryCustomHeaderForCellReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCustomHeaderForCellReusableView.swift; sourceTree = "<group>"; };
+		3738D4F1299804F5006EB6C4 /* LibraryCustomInspirationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCustomInspirationCell.swift; sourceTree = "<group>"; };
+		3738D4F429980523006EB6C4 /* LibraryCustomPopularCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCustomPopularCell.swift; sourceTree = "<group>"; };
+		3738D4F629980537006EB6C4 /* LibraryCustomNewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCustomNewCell.swift; sourceTree = "<group>"; };
+		3738D4F929980BBE006EB6C4 /* FetchedArticles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedArticles.swift; sourceTree = "<group>"; };
+		3738D4FB29980C45006EB6C4 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		3738D4FF29980EBB006EB6C4 /* ArticleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleFactory.swift; sourceTree = "<group>"; };
+		3738D50129980F0D006EB6C4 /* ArticleFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleFactoryProtocol.swift; sourceTree = "<group>"; };
+		3738D50329980F2F006EB6C4 /* ArticleFactoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleFactoryDelegate.swift; sourceTree = "<group>"; };
+		3738D50529980FB6006EB6C4 /* ArticlesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesLoader.swift; sourceTree = "<group>"; };
 		3743631729939E41004FFB76 /* MoodImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodImageView.swift; sourceTree = "<group>"; };
 		374363192993DAC2004FFB76 /* ReasonButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonButtonModel.swift; sourceTree = "<group>"; };
 		3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCustomCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -119,6 +141,65 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3738D4ED29980397006EB6C4 /* AnalyticsModel */ = {
+			isa = PBXGroup;
+			children = (
+				3738D4EE299803A7006EB6C4 /* Headers */,
+				3738D4F329980503006EB6C4 /* CustomCells */,
+				3738D4F829980BA5006EB6C4 /* Articles */,
+			);
+			path = AnalyticsModel;
+			sourceTree = "<group>";
+		};
+		3738D4EE299803A7006EB6C4 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				3738D4EF299803DE006EB6C4 /* LibraryCustomHeaderForCellReusableView.swift */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		3738D4F329980503006EB6C4 /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				3738D4F1299804F5006EB6C4 /* LibraryCustomInspirationCell.swift */,
+				3738D4F429980523006EB6C4 /* LibraryCustomPopularCell.swift */,
+				3738D4F629980537006EB6C4 /* LibraryCustomNewCell.swift */,
+			);
+			path = CustomCells;
+			sourceTree = "<group>";
+		};
+		3738D4F829980BA5006EB6C4 /* Articles */ = {
+			isa = PBXGroup;
+			children = (
+				3738D4F929980BBE006EB6C4 /* FetchedArticles.swift */,
+			);
+			path = Articles;
+			sourceTree = "<group>";
+		};
+		3738D4FD29980DC0006EB6C4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				37CBE98E299252B2002F7E34 /* Color+Extension.swift */,
+				37CBE992299252F2002F7E34 /* Array+Extension.swift */,
+				37CBE9BF29929EBA002F7E34 /* URL+Extension.swift */,
+				37CBE990299252D2002F7E34 /* ReuseIdentifier+Extension.swift */,
+				3736454629953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3738D4FE29980EAE006EB6C4 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				3738D4FF29980EBB006EB6C4 /* ArticleFactory.swift */,
+				3738D50529980FB6006EB6C4 /* ArticlesLoader.swift */,
+				3738D50129980F0D006EB6C4 /* ArticleFactoryProtocol.swift */,
+				3738D50329980F2F006EB6C4 /* ArticleFactoryDelegate.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
 		37CBE96A29925175002F7E34 = {
 			isa = PBXGroup;
 			children = (
@@ -158,14 +239,10 @@
 		37CBE98D299252A1002F7E34 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				37CBE98E299252B2002F7E34 /* Color+Extension.swift */,
-				37CBE990299252D2002F7E34 /* ReuseIdentifier+Extension.swift */,
-				37CBE992299252F2002F7E34 /* Array+Extension.swift */,
+				3738D4FD29980DC0006EB6C4 /* Extensions */,
 				37CBE9A029925BF0002F7E34 /* BottomActionButton.swift */,
 				37CBE9A229925EB6002F7E34 /* CustomReasonButton.swift */,
 				37CBE9A4299261F4002F7E34 /* CustomFont.swift */,
-				37CBE9BF29929EBA002F7E34 /* URL+Extension.swift */,
-				3736454629953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -194,6 +271,7 @@
 		37CBE99E29925633002F7E34 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				3738D4FE29980EAE006EB6C4 /* Factory */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -202,6 +280,9 @@
 			isa = PBXGroup;
 			children = (
 				37CBE9B8299297BA002F7E34 /* Constants.swift */,
+				3738D4FB29980C45006EB6C4 /* NetworkClient.swift */,
+				37CBE9E02992B6A5002F7E34 /* DiaryModel */,
+				3738D4ED29980397006EB6C4 /* AnalyticsModel */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -298,11 +379,10 @@
 			isa = PBXGroup;
 			children = (
 				37CBE9DE2992B68E002F7E34 /* CustomCell */,
-				37CBE9DF2992B696002F7E34 /* Service */,
-				37CBE9E02992B6A5002F7E34 /* Model */,
 				37CBE9C62992A22C002F7E34 /* DiaryViewController.swift */,
 				37CBE9E72992D4B3002F7E34 /* AddMoodViewController.swift */,
 				37CBE9E92992E078002F7E34 /* MoodBoardViewController.swift */,
+				3738D4EB2997F7E0006EB6C4 /* SingleNoteViewController.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -340,14 +420,7 @@
 			path = CustomCell;
 			sourceTree = "<group>";
 		};
-		37CBE9DF2992B696002F7E34 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
-		37CBE9E02992B6A5002F7E34 /* Model */ = {
+		37CBE9E02992B6A5002F7E34 /* DiaryModel */ = {
 			isa = PBXGroup;
 			children = (
 				37CBE9E12992B6EE002F7E34 /* DataUpdateModel.swift */,
@@ -355,7 +428,7 @@
 				3743631729939E41004FFB76 /* MoodImageView.swift */,
 				374363192993DAC2004FFB76 /* ReasonButtonModel.swift */,
 			);
-			path = Model;
+			path = DiaryModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -435,18 +508,25 @@
 			files = (
 				3743631829939E41004FFB76 /* MoodImageView.swift in Sources */,
 				3743631C2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift in Sources */,
+				3738D50629980FB6006EB6C4 /* ArticlesLoader.swift in Sources */,
 				37CBE9CB2992A269002F7E34 /* LibraryViewController.swift in Sources */,
+				3738D50229980F0D006EB6C4 /* ArticleFactoryProtocol.swift in Sources */,
+				3738D4F0299803DE006EB6C4 /* LibraryCustomHeaderForCellReusableView.swift in Sources */,
 				37CBE9BE29929E2C002F7E34 /* Profile.swift in Sources */,
+				3738D4FC29980C45006EB6C4 /* NetworkClient.swift in Sources */,
 				37CBE9A329925EB6002F7E34 /* CustomReasonButton.swift in Sources */,
 				37CBE9AF29929508002F7E34 /* OAuth2tokenStorage.swift in Sources */,
 				37CBE9B12992951E002F7E34 /* OAuth2Service.swift in Sources */,
 				37CBE9D72992A560002F7E34 /* AlertPresenterProtocol.swift in Sources */,
+				3738D4F2299804F5006EB6C4 /* LibraryCustomInspirationCell.swift in Sources */,
 				3736454729953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift in Sources */,
 				37CBE98129925175002F7E34 /* MentalHealth.xcdatamodeld in Sources */,
 				37CBE9CD2992A274002F7E34 /* ProfileViewController.swift in Sources */,
 				37CBE9D32992A53C002F7E34 /* AlertPresenter.swift in Sources */,
 				37CBE9C52992A1D2002F7E34 /* MainTabBarViewController.swift in Sources */,
+				3738D4F729980537006EB6C4 /* LibraryCustomNewCell.swift in Sources */,
 				37CBE9C029929EBA002F7E34 /* URL+Extension.swift in Sources */,
+				3738D4F529980523006EB6C4 /* LibraryCustomPopularCell.swift in Sources */,
 				37CBE9EF2992EEB9002F7E34 /* MoodNote+CoreDataClass.swift in Sources */,
 				37CBE9D02992A4FB002F7E34 /* SplashViewController.swift in Sources */,
 				37CBE9D92992A571002F7E34 /* AlertPresenterDelegate.swift in Sources */,
@@ -471,8 +551,12 @@
 				37CBE991299252D2002F7E34 /* ReuseIdentifier+Extension.swift in Sources */,
 				37CBE993299252F2002F7E34 /* Array+Extension.swift in Sources */,
 				37CBE97729925175002F7E34 /* AppDelegate.swift in Sources */,
+				3738D50429980F2F006EB6C4 /* ArticleFactoryDelegate.swift in Sources */,
+				3738D50029980EBB006EB6C4 /* ArticleFactory.swift in Sources */,
+				3738D4FA29980BBE006EB6C4 /* FetchedArticles.swift in Sources */,
 				37CBE97929925175002F7E34 /* SceneDelegate.swift in Sources */,
 				37CBE9C22992A0DB002F7E34 /* OAuthResponseBody.swift in Sources */,
+				3738D4EC2997F7E0006EB6C4 /* SingleNoteViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

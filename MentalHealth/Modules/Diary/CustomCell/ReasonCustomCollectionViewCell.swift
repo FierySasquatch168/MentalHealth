@@ -7,13 +7,23 @@
 
 import UIKit
 
+protocol ReasonCustomCollectionViewCellDelegate: AnyObject {
+    func didTapButton(with title: String)
+}
+
 class ReasonCustomCollectionViewCell: UICollectionViewCell {
-    private lazy var reasonButton: CustomReasonButton = {
+    weak var delegate: ReasonCustomCollectionViewCellDelegate?
+    private var buttonTitle: String = ""
+    
+    var buttonIsSelected: Bool = false
+    
+    lazy var reasonButton: CustomReasonButton = {
         let button = CustomReasonButton(color: .customButtonPurple!)
+        button.addTarget(self, action: #selector(selectButton), for: .touchUpInside)
         return button
     }()
     
-    private lazy var buttonTitle: UILabel = {
+     lazy var buttonTitleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .black
@@ -25,6 +35,7 @@ class ReasonCustomCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -33,8 +44,22 @@ class ReasonCustomCollectionViewCell: UICollectionViewCell {
     
     func setCellWithValuesOf(item: ReasonButtonModel) {
         self.backgroundColor = .clear
+        self.buttonTitle = item.buttonTitle
         reasonButton.setImage(UIImage(named: item.imageName), for: .normal)
-        buttonTitle.text = item.buttonTitle
+        buttonTitleLabel.text = buttonTitle
+        
+    }
+    
+    @objc func selectButton() {
+        delegate?.didTapButton(with: buttonTitle)
+        buttonIsSelected.toggle()
+
+        switch buttonIsSelected {
+        case true:
+            reasonButton.backgroundColor = .customPurple
+        case false:
+            reasonButton.backgroundColor = .customButtonPurple
+        }
     }
     
     // MARK: UI configuration
@@ -56,12 +81,12 @@ class ReasonCustomCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupButtonTitleLabel() {
-        contentView.addSubview(buttonTitle)
-        buttonTitle.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(buttonTitleLabel)
+        buttonTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            buttonTitle.topAnchor.constraint(equalTo: reasonButton.bottomAnchor, constant: 5),
-            buttonTitle.leadingAnchor.constraint(equalTo: reasonButton.leadingAnchor),
-            buttonTitle.trailingAnchor.constraint(equalTo: reasonButton.trailingAnchor)
+            buttonTitleLabel.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 5),
+            buttonTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            buttonTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
 }

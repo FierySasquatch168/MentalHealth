@@ -13,7 +13,6 @@ class DiaryViewController: DiaryModuleViewController {
     private var updatedNotes: [MoodNote] = [] {
         didSet {
             setupMiddleStackView()
-            tableView.reloadData()
         }
     }
     
@@ -29,6 +28,8 @@ class DiaryViewController: DiaryModuleViewController {
         tableView.dataSource = self
         
         tableView.register(CustomDiaryTableViewCell.self, forCellReuseIdentifier: CustomDiaryTableViewCell.reuseIdentifier)
+        
+        tableView.backgroundView = middleStackView
         
         return tableView
     }()
@@ -77,6 +78,7 @@ class DiaryViewController: DiaryModuleViewController {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "Head")
         
         return imageView
     }()
@@ -98,9 +100,7 @@ class DiaryViewController: DiaryModuleViewController {
         super.viewDidLoad()
 
         setupUI()
-        
-        print("NavigationController nib name is \(self.navigationController?.viewControllers)")
-        
+                
         // get items from CoreData
         fetchNotesFromCoreData()
         
@@ -173,13 +173,9 @@ class DiaryViewController: DiaryModuleViewController {
     }
     
     private func setupMiddleStackView() {
-        guard let image = UIImage(named: "Head") else { return }
-        print("setupBackgroundImage works")
         if updatedNotes.isEmpty {
-            print("updatedNotes isEmpty")
-            mainImageView.image = image
+            middleStackView.isHidden = false
         } else {
-            print("updatedNotes isNotEmpty")
             middleStackView.isHidden = true
         }
     }
@@ -187,7 +183,6 @@ class DiaryViewController: DiaryModuleViewController {
     private func setupAddButton() {
         view.addSubview(addButton)
         addButton.translatesAutoresizingMaskIntoConstraints = false
-        
         addButton.layer.cornerRadius = addButton.frame.size.width / 2
 
         NSLayoutConstraint.activate([

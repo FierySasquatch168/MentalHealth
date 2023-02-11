@@ -37,8 +37,14 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     // Delegate
     var handleUpdatedDataDelegate: ReasonsUpdateDelegate?
     
-    // CollectionView and dataSource
-    private var collectionView: UICollectionView?
+    // CollectionView and DataSource
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        collectionView.register(ReasonCustomCollectionViewCell.self, forCellWithReuseIdentifier: ReasonCustomCollectionViewCell.reuseIdentifier)
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
+    
     private var dataSource: DataSource!
     
     // MARK: TOP lazy properties
@@ -96,18 +102,6 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         return label
     }()
     
-    // MARK: Middle buttons stackView
-    
-    private lazy var singleButtonStackView: UIStackView = {
-        let stackView = UIStackView()
-        return stackView
-    }()
-    
-    private lazy var topHorizontalButtonStackView: UIStackView = {
-        let stackView = UIStackView()
-        return stackView
-    }()
-    
     // MARK: Bottom lazy properties
     
     private lazy var bottomSheet: UIButton = {
@@ -122,6 +116,7 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         button.contentVerticalAlignment = .top
         button.contentHorizontalAlignment = .leading
         button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 28, bottom: 0, right: 0)
+        button.addTarget(self, action: #selector(didTapBottomSheet), for: .touchUpInside)
         return button
     }()
     
@@ -150,8 +145,10 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
                 
         setupUpperUI()
         setupCollectionView()
+        
         createDataSourceMockModel()
         createDataSource()
+        
         setupLowerUI()
         
     }
@@ -178,7 +175,7 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         let button = CustomReasonButton(color: color)
         
         for (key, value) in collectionViewButtonMockData {
-            let model = ReasonButtonModel(button: button, imageName: value, buttonTitle: key)
+            let model = ReasonButtonModel(button: CustomReasonButton(color: .customButtonPurple ?? .black), imageName: value, buttonTitle: key)
             buttonsForCollectionView.append(model)
         }
     }
@@ -186,8 +183,6 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     // MARK: CollectionView setup
     
     private func setupCollectionView() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
-        guard let collectionView = collectionView else { return }
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -197,23 +192,22 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -190)
         ])
-        
-        // MARK: UICV cells registration
-        collectionView.register(ReasonCustomCollectionViewCell.self, forCellWithReuseIdentifier: ReasonCustomCollectionViewCell.reuseIdentifier)
     }
     
+    // MARK: UICV dataSource setup
     private func createDataSource() {
-        guard let collectionView = collectionView else { return }
         dataSource = DataSource(collectionView: collectionView, cellProvider: { [unowned self] (collectionView, indexPath, itemIdentifier) in
             return self.cell(collectionView: collectionView, indexPath: indexPath, item: itemIdentifier)
         })
+                
+        dataSource?.apply(createSnapshot())
         
-        dataSource.apply(createSnapshot())
     }
     
     private func cell(collectionView: UICollectionView, indexPath: IndexPath, item: ReasonButtonModel) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReasonCustomCollectionViewCell.reuseIdentifier, for: indexPath) as? ReasonCustomCollectionViewCell else { fatalError("Can not configure custom CV cell in MoodBoardVC") }
         cell.setCellWithValuesOf(item: item)
+        cell.delegate = self
         return cell
     }
     
@@ -226,25 +220,25 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     
     // MARK: Create UICollectionView layouts
     
-    private func sectionFor(index: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-        return createButtonsSection()
-    }
+//    private func sectionFor(index: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+//        return createLayout()
+//    }
+//
+//    private func createCompositionalLayout() -> UICollectionViewLayout {
+//        return UICollectionViewCompositionalLayout { [unowned self] sectionIndex, environment in
+//            return self.sectionFor(index: sectionIndex, environment: environment)
+//        }
+//    }
     
-    private func createCompositionalLayout() -> UICollectionViewLayout {
-        return UICollectionViewCompositionalLayout { [unowned self] sectionIndex, environment in
-            return self.sectionFor(index: sectionIndex, environment: environment)
-        }
-    }
-    
-    private func createButtonsSection() -> NSCollectionLayoutSection {
+    private func createLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(68), heightDimension: .absolute(68))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
         let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.55))
         let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
         layoutGroup.interItemSpacing = .fixed(15.0)
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-        
-        return layoutSection
+        let layout = UICollectionViewCompositionalLayout(section: layoutSection)
+        return layout
         
     }
     
@@ -269,13 +263,18 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         newNote.mood = moodImage
         newNote.backgroundImage = backgroundImage
         newNote.moodDescription = moodLabelText
-        newNote.reasonsDescription = chosenReasons.joined(separator: ", ")
+        newNote.reasonsDescription = chosenReasons.isEmpty ? "You preferred not to describe the reasons" : chosenReasons.joined(separator: ", ")
         
         // Handle data to delegate
         handleUpdatedDataDelegate?.saveNote(data: newNote)
                 
         // Return to rootVC
         goToRootVC()
+    }
+    
+    @objc private func didTapBottomSheet() {
+        let singleNoteVC = SingleNoteViewController()
+        self.present(singleNoteVC, animated: true)
     }
     
     // MARK: Private funcs
@@ -348,9 +347,7 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     private func setupBottomSheet() {
         view.addSubview(bottomSheet)
         bottomSheet.translatesAutoresizingMaskIntoConstraints = false
-        
-        guard let collectionView = collectionView else { return }
-        
+                
         NSLayoutConstraint.activate([
             bottomSheet.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 37),
             bottomSheet.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 27),
@@ -385,6 +382,14 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
 
 }
 
-extension MoodBoardViewController: UICollectionViewDelegate {
-    
+// MARK: Extension CellDelegate
+
+extension MoodBoardViewController: ReasonCustomCollectionViewCellDelegate {
+    func didTapButton(with title: String) {
+        if chosenReasons.contains(title) {
+            chosenReasons.removeAll(where: { $0 == title })
+        } else {
+            chosenReasons.append(title)
+        }
+    }
 }
