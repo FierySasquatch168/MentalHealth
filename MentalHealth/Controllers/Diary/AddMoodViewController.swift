@@ -140,8 +140,6 @@ class AddMoodViewController: DiaryModuleViewController, ReasonsUpdateDelegate, U
         
         view.backgroundColor = .white
         
-        print("NavigationController nib name is \(self.navigationController?.viewControllers)")
-        
         setupUI()
         pickerViewSetup()
         setupMoodLabel()

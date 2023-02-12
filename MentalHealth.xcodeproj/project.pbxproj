@@ -18,6 +18,7 @@
 		3738D50229980F0D006EB6C4 /* ArticleFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D50129980F0D006EB6C4 /* ArticleFactoryProtocol.swift */; };
 		3738D50429980F2F006EB6C4 /* ArticleFactoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D50329980F2F006EB6C4 /* ArticleFactoryDelegate.swift */; };
 		3738D50629980FB6006EB6C4 /* ArticlesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D50529980FB6006EB6C4 /* ArticlesLoader.swift */; };
+		3738D50E29984673006EB6C4 /* ArticleImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D50D29984673006EB6C4 /* ArticleImageFetcher.swift */; };
 		3743631829939E41004FFB76 /* MoodImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3743631729939E41004FFB76 /* MoodImageView.swift */; };
 		3743631A2993DAC2004FFB76 /* ReasonButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374363192993DAC2004FFB76 /* ReasonButtonModel.swift */; };
 		3743631C2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */; };
@@ -78,6 +79,7 @@
 		3738D50129980F0D006EB6C4 /* ArticleFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleFactoryProtocol.swift; sourceTree = "<group>"; };
 		3738D50329980F2F006EB6C4 /* ArticleFactoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleFactoryDelegate.swift; sourceTree = "<group>"; };
 		3738D50529980FB6006EB6C4 /* ArticlesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesLoader.swift; sourceTree = "<group>"; };
+		3738D50D29984673006EB6C4 /* ArticleImageFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleImageFetcher.swift; sourceTree = "<group>"; };
 		3743631729939E41004FFB76 /* MoodImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodImageView.swift; sourceTree = "<group>"; };
 		374363192993DAC2004FFB76 /* ReasonButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonButtonModel.swift; sourceTree = "<group>"; };
 		3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCustomCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -142,7 +144,7 @@
 		3738D4ED29980397006EB6C4 /* AnalyticsModel */ = {
 			isa = PBXGroup;
 			children = (
-				3738D4F929980BBE006EB6C4 /* FetchedArticles.swift */,
+				3738D4FE29980EAE006EB6C4 /* Factory */,
 			);
 			path = AnalyticsModel;
 			sourceTree = "<group>";
@@ -180,8 +182,10 @@
 		3738D4FE29980EAE006EB6C4 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
+				3738D4F929980BBE006EB6C4 /* FetchedArticles.swift */,
 				3738D4FF29980EBB006EB6C4 /* ArticleFactory.swift */,
 				3738D50529980FB6006EB6C4 /* ArticlesLoader.swift */,
+				3738D50D29984673006EB6C4 /* ArticleImageFetcher.swift */,
 				3738D50129980F0D006EB6C4 /* ArticleFactoryProtocol.swift */,
 				3738D50329980F2F006EB6C4 /* ArticleFactoryDelegate.swift */,
 			);
@@ -310,7 +314,6 @@
 		37CBE99E29925633002F7E34 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				3738D4FE29980EAE006EB6C4 /* Factory */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 				37CBE9E62992B97B002F7E34 /* CustomDiaryTableViewCell.swift in Sources */,
 				37CBE9E42992B760002F7E34 /* MoodPickerModel.swift in Sources */,
 				37CBE9EA2992E078002F7E34 /* MoodBoardViewController.swift in Sources */,
+				3738D50E29984673006EB6C4 /* ArticleImageFetcher.swift in Sources */,
 				37CBE9A129925BF0002F7E34 /* BottomActionButton.swift in Sources */,
 				37CBE9E82992D4B3002F7E34 /* AddMoodViewController.swift in Sources */,
 				37CBE9C72992A22C002F7E34 /* DiaryViewController.swift in Sources */,
