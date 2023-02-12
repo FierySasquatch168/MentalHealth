@@ -15,9 +15,12 @@ class LibraryViewController: UIViewController {
     // MARK: Dataflow
     private let constants = Constants.shared
     private var articleFactory: ArticleFactoryProtocol?
+    private let cellImageFetcher = ArticleImageFetcher.shared
+    
     private var articles: [Article] = []
     private var popularArticles: [Article] = []
     private var newArticle: [Article] = []
+    
     private var headers = ["Inspiration", "Popular", "New"]
     
     private lazy var collectionView: UICollectionView = {
@@ -41,7 +44,7 @@ class LibraryViewController: UIViewController {
     private var backGroundTopImage: UIImageView = {
         let topImage = UIImageView()
         topImage.backgroundColor = .clear
-        topImage.image = UIImage(named: "backgroundTopmGradientImage")
+        topImage.image = UIImage(named: "backgroundTopGradientImage")
         return topImage
     }()
     
@@ -78,8 +81,8 @@ class LibraryViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -37)
         ])
         
@@ -119,14 +122,17 @@ class LibraryViewController: UIViewController {
         case "New":
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LibraryCustomNewCell.reuseIdentifier, for: indexPath) as? LibraryCustomNewCell else { fatalError()}
             // TODO: configure the cell
+            cell.setCellWithValuesOf(item)
             return cell
         case "Popular":
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LibraryCustomPopularCell.reuseIdentifier, for: indexPath) as? LibraryCustomPopularCell else { fatalError()}
             // TODO: configure the cell
+            cell.setCellWithValuesOf(item)
             return cell
         default:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LibraryCustomInspirationCell.reuseIdentifier, for: indexPath) as? LibraryCustomInspirationCell else { fatalError()}
             // TODO: configure the cell
+            cell.setCellWithValuesOf(item)
             return cell
         }
     }
@@ -166,10 +172,12 @@ class LibraryViewController: UIViewController {
         }
     }
     
+    // MARK: Inspiration
+    
     private func createInspirationArticlesSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(72), heightDimension: .absolute(72))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.15))
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.17))
         let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
         layoutGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 23, bottom: 0, trailing: 0)
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
@@ -179,11 +187,13 @@ class LibraryViewController: UIViewController {
         return layoutSection
     }
     
+    // MARK: Popular
+    
     private func createPopularArticlesSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
         layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 23, bottom: 0, trailing: 23)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.25))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.35))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [layoutItem])
         let section = NSCollectionLayoutSection(group: group)
         addStandardHeader(toSection: section)
@@ -191,6 +201,7 @@ class LibraryViewController: UIViewController {
         return section
     }
     
+    // MARK: New
     private func createNewArticlesSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -205,7 +216,7 @@ class LibraryViewController: UIViewController {
     // MARK: Header
     
     private func addStandardHeader(toSection section: NSCollectionLayoutSection) {
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.05))
         let headerElement = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         section.boundarySupplementaryItems = [headerElement]
     }
