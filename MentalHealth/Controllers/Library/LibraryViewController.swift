@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class LibraryViewController: UIViewController {
     
@@ -33,6 +34,8 @@ class LibraryViewController: UIViewController {
         
         // MARK: UICV header
         collectionView.register(LibraryCustomHeaderForCellReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: LibraryCustomHeaderForCellReusableView.reuseIdentifier)
+        
+        collectionView.delegate = self
         
         return collectionView
     }()
@@ -263,4 +266,20 @@ extension LibraryViewController: ArticleFactoryDelegate {
     }
     
     
+}
+
+// MARK: Extensions
+
+extension LibraryViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let item = dataSource.itemIdentifier(for: indexPath),
+              let strUrl = item.url,
+              let url = URL(string: strUrl)
+        else {
+            return
+        }
+        let SafariVC = SFSafariViewController(url: url)
+        present(SafariVC, animated: true)
+        
+    }
 }
