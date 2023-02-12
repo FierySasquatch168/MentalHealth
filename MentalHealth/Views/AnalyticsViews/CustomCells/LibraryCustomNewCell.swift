@@ -101,9 +101,9 @@ class LibraryCustomNewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 23),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             stackView.heightAnchor.constraint(equalToConstant: 200),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -23)
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -27)
         ])
     }
     

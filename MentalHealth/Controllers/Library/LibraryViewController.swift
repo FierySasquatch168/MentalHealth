@@ -179,10 +179,13 @@ class LibraryViewController: UIViewController {
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
         let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.17))
         let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
+        let spacing = NSCollectionLayoutSpacing.fixed(7)
+        layoutGroup.interItemSpacing = spacing
         layoutGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 23, bottom: 0, trailing: 0)
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         addStandardHeader(toSection: layoutSection)
         layoutSection.orthogonalScrollingBehavior = .continuous
+        layoutSection.interGroupSpacing = -75
         
         return layoutSection
     }
