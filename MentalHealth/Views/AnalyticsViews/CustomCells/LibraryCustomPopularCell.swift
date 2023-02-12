@@ -9,14 +9,40 @@ import UIKit
 
 class LibraryCustomPopularCell: UICollectionViewCell {
     
-    var articleImageView = UIImageView()
-    var articleTitleLabel = UILabel()
+    private lazy var articleImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .secondarySystemBackground
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    private lazy var articleTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: CustomFont.InterLight.rawValue, size: 10)
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        label.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        return label
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillProportionally
+        stackView.backgroundColor = .white
+        stackView.layer.cornerRadius = 8
+        
+        stackView.addArrangedSubview(articleImageView)
+        stackView.addArrangedSubview(articleTitleLabel)
+        return stackView
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        configureArticleImageView()
-        configureArticleTitleLabel()
+        configureStackView()
     }
     
     required init?(coder: NSCoder) {
@@ -69,38 +95,15 @@ class LibraryCustomPopularCell: UICollectionViewCell {
     
     // MARK: UI configuration
     
-    func configureArticleImageView() {
-        addSubview(articleImageView)
-        articleImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        articleImageView.backgroundColor = .secondarySystemBackground
-        articleImageView.contentMode = .scaleAspectFill
-        articleImageView.layer.cornerRadius = 8
-        articleImageView.layer.masksToBounds = true
-        articleImageView.clipsToBounds = true
+    func configureStackView() {
+        addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            articleImageView.topAnchor.constraint(equalTo: topAnchor),
-            articleImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            articleImageView.heightAnchor.constraint(equalToConstant: 147),
-            articleImageView.widthAnchor.constraint(equalToConstant: 142)
-        ])
-    }
-    
-    func configureArticleTitleLabel() {
-        addSubview(articleTitleLabel)
-        articleTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        articleTitleLabel.font = .systemFont(ofSize: 12, weight: .semibold)
-        articleTitleLabel.numberOfLines = 2
-        articleTitleLabel.backgroundColor = .white
-        articleTitleLabel.layer.cornerRadius = 16
-        articleTitleLabel.textAlignment = .center
-        
-        NSLayoutConstraint.activate([
-            articleTitleLabel.topAnchor.constraint(equalTo: articleImageView.bottomAnchor),
-            articleTitleLabel.leadingAnchor.constraint(equalTo: articleImageView.leadingAnchor),
-            articleTitleLabel.trailingAnchor.constraint(equalTo: articleImageView.trailingAnchor)
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.heightAnchor.constraint(equalToConstant: 200),
+            stackView.widthAnchor.constraint(equalToConstant: 142)
         ])
     }
 }

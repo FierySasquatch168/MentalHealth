@@ -14,6 +14,7 @@ class LibraryCustomInspirationCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 36
         
         return imageView
     }()
@@ -26,12 +27,6 @@ class LibraryCustomInspirationCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        articleImageView.layer.cornerRadius = articleImageView.frame.width / 2
     }
     
     // Setup articles values
