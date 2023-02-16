@@ -8,6 +8,8 @@
 import UIKit
 import SafariServices
 
+// TODO: Cache images, refactor image downloading to a single source, add difference between new and viewed articles
+
 class LibraryViewController: UIViewController {
     
     private typealias DataSource = UICollectionViewDiffableDataSource<String, Article>
@@ -16,7 +18,6 @@ class LibraryViewController: UIViewController {
     // MARK: Dataflow
     private let constants = Constants.shared
     private var articleFactory: ArticleFactoryProtocol?
-    private let cellImageFetcher = ArticleImageFetcher.shared
     
     private var articles: [Article] = []
     private var popularArticles: [Article] = []

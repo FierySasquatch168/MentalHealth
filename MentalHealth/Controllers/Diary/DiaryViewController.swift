@@ -8,6 +8,8 @@
 import UIKit
 import CoreData
 
+// TODO: set tableView delegate, finish single note screen, check tabbar appearence
+
 class DiaryViewController: DiaryModuleViewController {
 
     private var updatedNotes: [MoodNote] = [] {
@@ -156,7 +158,7 @@ class DiaryViewController: DiaryModuleViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
