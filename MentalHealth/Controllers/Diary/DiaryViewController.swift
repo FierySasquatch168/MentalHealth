@@ -6,12 +6,10 @@
 //
 
 import UIKit
-import CoreData
 
 // TODO: set tableView delegate, finish single note screen, check tabbar appearence
 
-class DiaryViewController: DiaryModuleViewController {
-
+class DiaryViewController: DiaryModuleViewController, CoreDataManagerDelegate {
     private var updatedNotes: [MoodNote] = [] {
         didSet {
             setupMiddleStackView()
@@ -102,9 +100,12 @@ class DiaryViewController: DiaryModuleViewController {
         super.viewDidLoad()
 
         setupUI()
+        
+        // coreDataManagerDelegate
+        coreDataManager.delegate = self
                 
         // get items from CoreData
-        fetchNotesFromCoreData()
+        coreDataManager.fetchNotesFromCoreData()
         
     }
     
@@ -123,22 +124,20 @@ class DiaryViewController: DiaryModuleViewController {
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
-    // MARK: Core Data functionality
+    // MARK: CoreData Delegate
     
-    private func fetchNotesFromCoreData() {
-        // Fetch the data from CoreData to display in the tableView
-        do {
-            let request = MoodNote.fetchRequest() as NSFetchRequest<MoodNote>
-            self.updatedNotes = try context.fetch(request)
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        } catch {
-            print(error)
+    func updateTheNotes(with notes: [MoodNote]) {
+        self.updatedNotes = notes
+        print("CoreData Delegate updateTheNotes works")
+    }
+    
+    func reloadTheTableView() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            print("CoreData Delegate reloadTheTableView works")
         }
     }
-        
+    
     // MARK: Setup UI
     
     private func setupUI() {
@@ -211,20 +210,22 @@ extension DiaryViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         // Create swipe action
-        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
+        let action = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completionHandler) in
+            guard let self = self else { return }
             // Which note to remove
             let noteToRemove = self.updatedNotes[indexPath.row]
             // Remove the note
-            self.context.delete(noteToRemove)
+            self.coreDataManager.context.delete(noteToRemove)
             // Save the data to Core Data
             do {
-                try self.context.save()
+                try self.coreDataManager.context.save()
             } catch {
                 print(error)
             }
             
             // Re-fetch the data
-            self.fetchNotesFromCoreData()
+            self.coreDataManager.fetchNotesFromCoreData()
+            self.tableView.reloadData()
         }
         return UISwipeActionsConfiguration(actions: [action])
     }
@@ -233,13 +234,7 @@ extension DiaryViewController: UITableViewDelegate, UITableViewDataSource {
 extension DiaryViewController: DataUpdateDelegate {
     func onDataUpdate(data: MoodNote) {
         updatedNotes.append(data)
-        
-        // Save the data
-        do {
-            try self.context.save()
-        } catch {
-            print(error)
-        }
+        coreDataManager.saveNotesToCoreData()
         tableView.reloadData()
     }
     

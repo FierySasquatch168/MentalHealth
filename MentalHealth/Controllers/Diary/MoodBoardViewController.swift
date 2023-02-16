@@ -250,10 +250,8 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     
     @objc private func saveDidTapped() {
         // Data for transfer
-        let newNote = MoodNote(context: self.context)
-        newNote.day = setTheDateForNote(with: "dd")
-        newNote.month = setTheDateForNote(with: "LLL")
-        newNote.time = setTheDateForNote(with: "HH:mm")
+//        let newNote = MoodNote(context: self.context)
+        let newNote = formNewNote()
         
         guard let moodLabelText = topMoodLabel.text,
                 let moodImage = UIImage(named: moodLabelText),

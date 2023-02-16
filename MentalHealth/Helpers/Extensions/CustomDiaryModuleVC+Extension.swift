@@ -8,13 +8,11 @@
 import UIKit
 
 class DiaryModuleViewController: UIViewController {
-    // reference to the managed context
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-}
-
-extension DiaryModuleViewController {
+    
+    let coreDataManager = CoreDataManager.shared
+    
     func formNewNote() -> MoodNote {
-        let newNote = MoodNote(context: self.context)
+        let newNote = MoodNote(context: self.coreDataManager.context)
         newNote.day = setTheDateForNote(with: "dd")
         newNote.month = setTheDateForNote(with: "LLL")
         newNote.time = setTheDateForNote(with: "HH:mm")

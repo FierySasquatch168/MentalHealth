@@ -72,6 +72,7 @@
 		37CBE9EA2992E078002F7E34 /* MoodBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE9E92992E078002F7E34 /* MoodBoardViewController.swift */; };
 		37CBE9EF2992EEB9002F7E34 /* MoodNote+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE9ED2992EEB9002F7E34 /* MoodNote+CoreDataClass.swift */; };
 		37CBE9F02992EEB9002F7E34 /* MoodNote+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE9EE2992EEB9002F7E34 /* MoodNote+CoreDataProperties.swift */; };
+		37E6C78C299E93AB00F4D6CA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E6C78B299E93AB00F4D6CA /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -141,6 +142,7 @@
 		37CBE9E92992E078002F7E34 /* MoodBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodBoardViewController.swift; sourceTree = "<group>"; };
 		37CBE9ED2992EEB9002F7E34 /* MoodNote+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoodNote+CoreDataClass.swift"; sourceTree = "<group>"; };
 		37CBE9EE2992EEB9002F7E34 /* MoodNote+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoodNote+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		37E6C78B299E93AB00F4D6CA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,12 +169,12 @@
 			path = AnalyticsViews;
 			sourceTree = "<group>";
 		};
-		3738D4ED29980397006EB6C4 /* AnalyticsModel */ = {
+		3738D4ED29980397006EB6C4 /* LibraryModel */ = {
 			isa = PBXGroup;
 			children = (
 				3738D4FE29980EAE006EB6C4 /* Factory */,
 			);
-			path = AnalyticsModel;
+			path = LibraryModel;
 			sourceTree = "<group>";
 		};
 		3738D4EE299803A7006EB6C4 /* Headers */ = {
@@ -352,7 +354,7 @@
 				37BD1532299B9051006B2CD9 /* TabBarModel */,
 				3738D50729983958006EB6C4 /* AuthorizationModel */,
 				37CBE9E02992B6A5002F7E34 /* DiaryModel */,
-				3738D4ED29980397006EB6C4 /* AnalyticsModel */,
+				3738D4ED29980397006EB6C4 /* LibraryModel */,
 				3738D50C29983E2D006EB6C4 /* AlertModel */,
 			);
 			path = Models;
@@ -447,6 +449,7 @@
 				37CBE9E12992B6EE002F7E34 /* DataUpdateModel.swift */,
 				37CBE9E32992B760002F7E34 /* MoodPickerModel.swift */,
 				374363192993DAC2004FFB76 /* ReasonButtonModel.swift */,
+				37E6C78B299E93AB00F4D6CA /* CoreDataManager.swift */,
 			);
 			path = DiaryModel;
 			sourceTree = "<group>";
@@ -586,6 +589,7 @@
 				3738D50029980EBB006EB6C4 /* ArticleFactory.swift in Sources */,
 				3738D4FA29980BBE006EB6C4 /* FetchedArticles.swift in Sources */,
 				371D88E1299E28D50079FDEA /* ReasonsCollectionViewCell.swift in Sources */,
+				37E6C78C299E93AB00F4D6CA /* CoreDataManager.swift in Sources */,
 				37CBE97929925175002F7E34 /* SceneDelegate.swift in Sources */,
 				37CBE9C22992A0DB002F7E34 /* OAuthResponseBody.swift in Sources */,
 				3738D4EC2997F7E0006EB6C4 /* SingleNoteViewController.swift in Sources */,
