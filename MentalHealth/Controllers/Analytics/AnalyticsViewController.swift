@@ -21,8 +21,6 @@ class AnalyticsViewController: UIViewController {
     
     private var headers = ["It upsets me mostly", "That's why I feel"]
     
-    private var analyticsViewIsEnabled: Bool = true
-    
     // MARK: Collection view
     
     private var collectionView: UICollectionView = {
@@ -31,7 +29,27 @@ class AnalyticsViewController: UIViewController {
         
         return collectionView
     }()
+    
     private var dataSource: DataSource?
+    
+    
+    private var analyticsViewIsHidden: Bool = true {
+        didSet {
+            // В таком виде работает ок
+            switch self.analyticsViewIsHidden {
+            case true:
+                pieChartStackView.isHidden = true
+                lineChart.isHidden = false
+                graphicsButton.setTitleColor(.black, for: .normal)
+                analyticsButton.setTitleColor(.customChartButton, for: .normal)
+            case false:
+                pieChartStackView.isHidden = false
+                lineChart.isHidden = true
+                analyticsButton.setTitleColor(.black, for: .normal)
+                graphicsButton.setTitleColor(.customChartButton, for: .normal)
+            }
+        }
+    }
     
     // MARK: Stack Views
     
@@ -44,7 +62,7 @@ class AnalyticsViewController: UIViewController {
         return stack
     }()
     
-    private lazy var middleStackView: UIStackView = {
+    private lazy var pieChartStackView: UIStackView = {
         let stack = UIStackView()
         stack.addArrangedSubview(chartBackgroundCircle)
         stack.addArrangedSubview(pieChart)
@@ -96,12 +114,12 @@ class AnalyticsViewController: UIViewController {
         return label
     }()
     
-    // MARK: Chart
+    // MARK: PieChart
     
     private lazy var pieChart: PieChartView = {
         let pieChart = PieChartView()
         pieChart.delegate = self
-        var entries: [ChartDataEntry] = []
+        var entries: [PieChartDataEntry] = []
         
         // set values for the chart
         for i in 0..<chartValues.count {
@@ -130,7 +148,7 @@ class AnalyticsViewController: UIViewController {
         return pieChart
     }()
     
-    // MARK: Chart properties
+    // MARK: PieChart properties
     
     private lazy var chartBackgroundCircle: UIImageView = {
         let image = UIImageView()
@@ -188,6 +206,35 @@ class AnalyticsViewController: UIViewController {
         return button
     }()
     
+    // MARK: Line chart
+    
+    private lazy var lineChart: LineChartView = {
+        let lineChart = LineChartView()
+        lineChart.delegate = self
+        
+        var entries: [ChartDataEntry] = []
+        
+        // set values for the chart
+        for i in 0..<chartValues.count {
+            let value = ChartDataEntry(x: chartValues[i], y: chartValues[i])
+            entries.append(value)
+        }
+        // set colors to the chart
+        let dataSet = LineChartDataSet(entries: entries)
+        dataSet.colors = [
+            NSUIColor(cgColor: UIColor.customGreen.cgColor),
+            NSUIColor(cgColor: UIColor.customLighBlue.cgColor),
+            NSUIColor(cgColor: UIColor.customOrange.cgColor),
+            NSUIColor(cgColor: UIColor.customYellow.cgColor)
+        ]
+        
+        let data = LineChartData(dataSet: dataSet)
+        lineChart.data = data
+        lineChart.isHidden = true
+        
+        return lineChart
+    }()
+    
     // MARK: Background style properties
     
     private lazy var backGroundTopImage: UIImageView = {
@@ -215,7 +262,48 @@ class AnalyticsViewController: UIViewController {
         createDataSource()
         
         setTimeInterval(timePick)
+        analyticsViewIsHidden = false
+    }
+    
+    // MARK: Behavior
+    
+    private func enablePieChart() {
+        pieChartStackView.isHidden = false
+        lineChart.isHidden = true
+        analyticsButton.setTitleColor(.black, for: .normal)
+        graphicsButton.setTitleColor(.customChartButton, for: .normal)
+    }
+    
+    private func createTimeInterval(days: Int) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.LL.YYYY"
         
+        let timeInterval = TimeInterval(days*24*60*60)
+        
+        let date = Date(timeInterval: -timeInterval, since: Date())
+        
+        let keyDate = dateFormatter.string(from: date)
+        let today = dateFormatter.string(from: Date())
+        
+        return "\(keyDate) - \(today)"
+    }
+    
+    // MARK: @objs funcs
+    
+    @objc private func setTimeInterval(_ segmentControl: UISegmentedControl) {
+        
+        switch segmentControl.selectedSegmentIndex {
+        case 0:
+            timePeriod.text = createTimeInterval(days: 7)
+        case 1:
+            timePeriod.text = createTimeInterval(days: 30)
+        default:
+            timePeriod.text = createTimeInterval(days: 100)
+        }
+    }
+    
+    @objc private func changeChartView() {
+        analyticsViewIsHidden.toggle()
     }
     
     // MARK: CollectionView setup
@@ -239,7 +327,7 @@ class AnalyticsViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: middleStackView.bottomAnchor, constant: 20),
+            collectionView.topAnchor.constraint(equalTo: pieChartStackView.bottomAnchor, constant: 20),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
@@ -348,48 +436,14 @@ class AnalyticsViewController: UIViewController {
         section.boundarySupplementaryItems = [headerElement]
     }
     
-    // MARK: Local private funcs
-
-    private func createTimeInterval(days: Int) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.LL.YYYY"
-        
-        let timeInterval = TimeInterval(days*24*60*60)
-        
-        let date = Date(timeInterval: -timeInterval, since: Date())
-        
-        let keyDate = dateFormatter.string(from: date)
-        let today = dateFormatter.string(from: Date())
-        
-        return "\(keyDate) - \(today)"
-    }
-    
-    // MARK: @objs funcs
-    
-    @objc private func setTimeInterval(_ segmentControl: UISegmentedControl) {
-        
-        switch segmentControl.selectedSegmentIndex {
-        case 0:
-            timePeriod.text = createTimeInterval(days: 7)
-        case 1:
-            timePeriod.text = createTimeInterval(days: 30)
-        default:
-            timePeriod.text = createTimeInterval(days: 100)
-        }
-    }
-    
-    @objc private func changeChartView() {
-        analyticsViewIsEnabled.toggle()
-        print("changeView")
-    }
-    
     // MARK: UI setup
     
     private func setupUI() {
         setupBackgroundTopView()
         setupBackgroundBottomView()
         setupTopButtonStackView()
-        setupMiddleStackView()
+        setupPieChartStackView()
+        setupLineChartView()
         setupTimePick()
         setupMoodLabel()
         setupTimePeriodLabel()
@@ -444,15 +498,27 @@ class AnalyticsViewController: UIViewController {
         ])
     }
     
-    private func setupMiddleStackView() {
-        view.addSubview(middleStackView)
-        middleStackView.translatesAutoresizingMaskIntoConstraints = false
+    private func setupPieChartStackView() {
+        view.addSubview(pieChartStackView)
+        pieChartStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            middleStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            middleStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 178),
-            middleStackView.heightAnchor.constraint(equalToConstant: 280),
-            middleStackView.widthAnchor.constraint(equalToConstant: 280)
+            pieChartStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pieChartStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 178),
+            pieChartStackView.heightAnchor.constraint(equalToConstant: 280),
+            pieChartStackView.widthAnchor.constraint(equalToConstant: 280)
+        ])
+    }
+    
+    private func setupLineChartView() {
+        view.addSubview(lineChart)
+        lineChart.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            lineChart.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            lineChart.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 178),
+            lineChart.heightAnchor.constraint(equalToConstant: 280),
+            lineChart.widthAnchor.constraint(equalToConstant: 280)
         ])
     }
     

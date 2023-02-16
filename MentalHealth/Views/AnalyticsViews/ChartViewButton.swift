@@ -14,8 +14,7 @@ class ChartViewButton: UIButton {
         
         let string = title
         let attributes = [
-            NSAttributedString.Key.font: UIFont(name: CustomFont.kyivTypeSansBold.rawValue, size: 20) as Any,
-            NSAttributedString.Key.foregroundColor: UIColor.black as Any
+            NSAttributedString.Key.font: UIFont(name: CustomFont.kyivTypeSansBold.rawValue, size: 20) as Any
         ]
         let attributedString = NSAttributedString(string: string, attributes: attributes)
         setAttributedTitle(attributedString, for: .normal)
