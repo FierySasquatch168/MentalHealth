@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		371D88DC299E213B0079FDEA /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 371D88DB299E213B0079FDEA /* Charts */; };
+		371D88DF299E21D30079FDEA /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D88DE299E21D30079FDEA /* CustomSegmentedControl.swift */; };
+		371D88E1299E28D50079FDEA /* ReasonsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D88E0299E28D50079FDEA /* ReasonsCollectionViewCell.swift */; };
+		371D88E3299E28F90079FDEA /* FeelingsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D88E2299E28F90079FDEA /* FeelingsCollectionViewCell.swift */; };
+		371D88E5299E2ADE0079FDEA /* AnalyticsCustomHeaderForCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D88E4299E2ADE0079FDEA /* AnalyticsCustomHeaderForCV.swift */; };
+		371D88E7299E39410079FDEA /* ChartViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D88E6299E39410079FDEA /* ChartViewButton.swift */; };
 		3736454729953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3736454629953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift */; };
 		3738D4EC2997F7E0006EB6C4 /* SingleNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4EB2997F7E0006EB6C4 /* SingleNoteViewController.swift */; };
 		3738D4F0299803DE006EB6C4 /* LibraryCustomHeaderForCellReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3738D4EF299803DE006EB6C4 /* LibraryCustomHeaderForCellReusableView.swift */; };
@@ -22,6 +28,7 @@
 		3743631829939E41004FFB76 /* MoodImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3743631729939E41004FFB76 /* MoodImageView.swift */; };
 		3743631A2993DAC2004FFB76 /* ReasonButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374363192993DAC2004FFB76 /* ReasonButtonModel.swift */; };
 		3743631C2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */; };
+		37BD1534299B9062006B2CD9 /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BD1533299B9062006B2CD9 /* TabItem.swift */; };
 		37CBE97729925175002F7E34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE97629925175002F7E34 /* AppDelegate.swift */; };
 		37CBE97929925175002F7E34 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE97829925175002F7E34 /* SceneDelegate.swift */; };
 		37CBE97B29925175002F7E34 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE97A29925175002F7E34 /* LoginViewController.swift */; };
@@ -68,6 +75,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		371D88DE299E21D30079FDEA /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		371D88E0299E28D50079FDEA /* ReasonsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonsCollectionViewCell.swift; sourceTree = "<group>"; };
+		371D88E2299E28F90079FDEA /* FeelingsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeelingsCollectionViewCell.swift; sourceTree = "<group>"; };
+		371D88E4299E2ADE0079FDEA /* AnalyticsCustomHeaderForCV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsCustomHeaderForCV.swift; sourceTree = "<group>"; };
+		371D88E6299E39410079FDEA /* ChartViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewButton.swift; sourceTree = "<group>"; };
 		3736454629953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomDiaryModuleVC+Extension.swift"; sourceTree = "<group>"; };
 		3738D4EB2997F7E0006EB6C4 /* SingleNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleNoteViewController.swift; sourceTree = "<group>"; };
 		3738D4EF299803DE006EB6C4 /* LibraryCustomHeaderForCellReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCustomHeaderForCellReusableView.swift; sourceTree = "<group>"; };
@@ -83,6 +95,7 @@
 		3743631729939E41004FFB76 /* MoodImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodImageView.swift; sourceTree = "<group>"; };
 		374363192993DAC2004FFB76 /* ReasonButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonButtonModel.swift; sourceTree = "<group>"; };
 		3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCustomCollectionViewCell.swift; sourceTree = "<group>"; };
+		37BD1533299B9062006B2CD9 /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem.swift; sourceTree = "<group>"; };
 		37CBE97329925175002F7E34 /* MentalHealth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MentalHealth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37CBE97629925175002F7E34 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37CBE97829925175002F7E34 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -135,12 +148,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				371D88DC299E213B0079FDEA /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		371D88DD299E21BC0079FDEA /* AnalyticsViews */ = {
+			isa = PBXGroup;
+			children = (
+				371D88DE299E21D30079FDEA /* CustomSegmentedControl.swift */,
+				371D88E0299E28D50079FDEA /* ReasonsCollectionViewCell.swift */,
+				371D88E2299E28F90079FDEA /* FeelingsCollectionViewCell.swift */,
+				371D88E4299E2ADE0079FDEA /* AnalyticsCustomHeaderForCV.swift */,
+				371D88E6299E39410079FDEA /* ChartViewButton.swift */,
+			);
+			path = AnalyticsViews;
+			sourceTree = "<group>";
+		};
 		3738D4ED29980397006EB6C4 /* AnalyticsModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,23 +234,26 @@
 			isa = PBXGroup;
 			children = (
 				3738D50A29983CE9006EB6C4 /* DiaryViews */,
-				3738D50929983CD0006EB6C4 /* AnalyticsViews */,
+				371D88DD299E21BC0079FDEA /* AnalyticsViews */,
+				3738D50929983CD0006EB6C4 /* LibraryViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		3738D50929983CD0006EB6C4 /* AnalyticsViews */ = {
+		3738D50929983CD0006EB6C4 /* LibraryViews */ = {
 			isa = PBXGroup;
 			children = (
 				3738D4EE299803A7006EB6C4 /* Headers */,
 				3738D4F329980503006EB6C4 /* CustomCells */,
 			);
-			path = AnalyticsViews;
+			path = LibraryViews;
 			sourceTree = "<group>";
 		};
 		3738D50A29983CE9006EB6C4 /* DiaryViews */ = {
 			isa = PBXGroup;
 			children = (
+				37CBE9A029925BF0002F7E34 /* BottomActionButton.swift */,
+				37CBE9A229925EB6002F7E34 /* CustomReasonButton.swift */,
 				37CBE9E52992B97A002F7E34 /* CustomDiaryTableViewCell.swift */,
 				3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */,
 				3743631729939E41004FFB76 /* MoodImageView.swift */,
@@ -240,6 +269,14 @@
 				37CBE9D82992A571002F7E34 /* AlertPresenterDelegate.swift */,
 			);
 			path = AlertModel;
+			sourceTree = "<group>";
+		};
+		37BD1532299B9051006B2CD9 /* TabBarModel */ = {
+			isa = PBXGroup;
+			children = (
+				37BD1533299B9062006B2CD9 /* TabItem.swift */,
+			);
+			path = TabBarModel;
 			sourceTree = "<group>";
 		};
 		37CBE96A29925175002F7E34 = {
@@ -269,7 +306,6 @@
 				37CBE9AA29929314002F7E34 /* Controllers */,
 				37CBE99F29925699002F7E34 /* Models */,
 				3738D50829983C2A006EB6C4 /* Views */,
-				37CBE99E29925633002F7E34 /* Service */,
 				37CBE994299254D2002F7E34 /* Resources */,
 				37CBE98D299252A1002F7E34 /* Helpers */,
 				37CBE98229925176002F7E34 /* Assets.xcassets */,
@@ -283,8 +319,6 @@
 			isa = PBXGroup;
 			children = (
 				3738D4FD29980DC0006EB6C4 /* Extensions */,
-				37CBE9A029925BF0002F7E34 /* BottomActionButton.swift */,
-				37CBE9A229925EB6002F7E34 /* CustomReasonButton.swift */,
 				37CBE9A4299261F4002F7E34 /* CustomFont.swift */,
 			);
 			path = Helpers;
@@ -311,17 +345,11 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		37CBE99E29925633002F7E34 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
 		37CBE99F29925699002F7E34 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				37CBE9B8299297BA002F7E34 /* Constants.swift */,
+				37BD1532299B9051006B2CD9 /* TabBarModel */,
 				3738D50729983958006EB6C4 /* AuthorizationModel */,
 				37CBE9E02992B6A5002F7E34 /* DiaryModel */,
 				3738D4ED29980397006EB6C4 /* AnalyticsModel */,
@@ -439,6 +467,9 @@
 			dependencies = (
 			);
 			name = MentalHealth;
+			packageProductDependencies = (
+				371D88DB299E213B0079FDEA /* Charts */,
+			);
 			productName = MentalHealth;
 			productReference = 37CBE97329925175002F7E34 /* MentalHealth.app */;
 			productType = "com.apple.product-type.application";
@@ -467,6 +498,9 @@
 				Base,
 			);
 			mainGroup = 37CBE96A29925175002F7E34;
+			packageReferences = (
+				371D88DA299E213B0079FDEA /* XCRemoteSwiftPackageReference "Charts" */,
+			);
 			productRefGroup = 37CBE97429925175002F7E34 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -504,6 +538,7 @@
 				37CBE9CB2992A269002F7E34 /* LibraryViewController.swift in Sources */,
 				3738D50229980F0D006EB6C4 /* ArticleFactoryProtocol.swift in Sources */,
 				3738D4F0299803DE006EB6C4 /* LibraryCustomHeaderForCellReusableView.swift in Sources */,
+				37BD1534299B9062006B2CD9 /* TabItem.swift in Sources */,
 				37CBE9BE29929E2C002F7E34 /* Profile.swift in Sources */,
 				37CBE9A329925EB6002F7E34 /* CustomReasonButton.swift in Sources */,
 				37CBE9AF29929508002F7E34 /* OAuth2tokenStorage.swift in Sources */,
@@ -527,6 +562,7 @@
 				37CBE9B9299297BA002F7E34 /* Constants.swift in Sources */,
 				37CBE9E62992B97B002F7E34 /* CustomDiaryTableViewCell.swift in Sources */,
 				37CBE9E42992B760002F7E34 /* MoodPickerModel.swift in Sources */,
+				371D88E5299E2ADE0079FDEA /* AnalyticsCustomHeaderForCV.swift in Sources */,
 				37CBE9EA2992E078002F7E34 /* MoodBoardViewController.swift in Sources */,
 				3738D50E29984673006EB6C4 /* ArticleImageFetcher.swift in Sources */,
 				37CBE9A129925BF0002F7E34 /* BottomActionButton.swift in Sources */,
@@ -541,11 +577,15 @@
 				3743631A2993DAC2004FFB76 /* ReasonButtonModel.swift in Sources */,
 				37CBE9B42992965C002F7E34 /* WebViewViewController.swift in Sources */,
 				37CBE991299252D2002F7E34 /* ReuseIdentifier+Extension.swift in Sources */,
+				371D88DF299E21D30079FDEA /* CustomSegmentedControl.swift in Sources */,
 				37CBE993299252F2002F7E34 /* Array+Extension.swift in Sources */,
 				37CBE97729925175002F7E34 /* AppDelegate.swift in Sources */,
+				371D88E7299E39410079FDEA /* ChartViewButton.swift in Sources */,
 				3738D50429980F2F006EB6C4 /* ArticleFactoryDelegate.swift in Sources */,
+				371D88E3299E28F90079FDEA /* FeelingsCollectionViewCell.swift in Sources */,
 				3738D50029980EBB006EB6C4 /* ArticleFactory.swift in Sources */,
 				3738D4FA29980BBE006EB6C4 /* FetchedArticles.swift in Sources */,
+				371D88E1299E28D50079FDEA /* ReasonsCollectionViewCell.swift in Sources */,
 				37CBE97929925175002F7E34 /* SceneDelegate.swift in Sources */,
 				37CBE9C22992A0DB002F7E34 /* OAuthResponseBody.swift in Sources */,
 				3738D4EC2997F7E0006EB6C4 /* SingleNoteViewController.swift in Sources */,
@@ -753,6 +793,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		371D88DA299E213B0079FDEA /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		371D88DB299E213B0079FDEA /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 371D88DA299E213B0079FDEA /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		37CBE97F29925175002F7E34 /* MentalHealth.xcdatamodeld */ = {

@@ -1,5 +1,5 @@
 //
-//  LibraryCustomPopularCell.swift
+//  LibraryCustomNewCell.swift
 //  MentalHealth
 //
 //  Created by Aleksandr Eliseev on 11.02.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LibraryCustomPopularCell: UICollectionViewCell {
+class LibraryCustomNewCell: UICollectionViewCell {
     
     private lazy var articleImageView: UIImageView = {
         let imageView = UIImageView()
@@ -23,7 +23,7 @@ class LibraryCustomPopularCell: UICollectionViewCell {
         label.font = UIFont(name: CustomFont.InterLight.rawValue, size: 10)
         label.numberOfLines = 2
         label.textAlignment = .center
-        label.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 30).isActive = true
         return label
     }()
     
@@ -42,7 +42,7 @@ class LibraryCustomPopularCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        configureStackView()
+       configureStackView()
     }
     
     required init?(coder: NSCoder) {
@@ -100,10 +100,11 @@ class LibraryCustomPopularCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             stackView.heightAnchor.constraint(equalToConstant: 200),
-            stackView.widthAnchor.constraint(equalToConstant: 142)
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -27)
         ])
     }
+    
 }
