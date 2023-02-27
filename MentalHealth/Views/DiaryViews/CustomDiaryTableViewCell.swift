@@ -145,6 +145,17 @@ class CustomDiaryTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Change the time model for better sorting
+    func set(note: MoodNote) {
+        backgroundImage.image = note.backgroundImage
+        dayLabel.text = note.day
+        timeLabel.text = note.time
+        moodImage.image = note.mood
+        monthLabel.text = note.month
+        moodDescription.text = note.moodDescription
+        reasonsDescription.text = note.reasonsDescription
+    }
+    
     private func setupMainStackView() {
         contentView.addSubview(mainStackView)
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -170,15 +181,4 @@ class CustomDiaryTableViewCell: UITableViewCell {
         
         
     }
-    
-    func set(note: MoodNote) {
-        backgroundImage.image = note.backgroundImage
-        dayLabel.text = note.day
-        timeLabel.text = note.time
-        moodImage.image = note.mood
-        monthLabel.text = note.month
-        moodDescription.text = note.moodDescription
-        reasonsDescription.text = note.reasonsDescription
-    }
-    
 }
