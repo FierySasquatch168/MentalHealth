@@ -29,21 +29,21 @@ final class CoreDataManager {
             let request = MoodNote.fetchRequest() as NSFetchRequest<MoodNote>
             
             // Set filtering and sorting on the request
+            
+            // TODO: Sorting by time works not right, needs more precise information about the time with seconds FIX!
             let timeSort = NSSortDescriptor(key: "time", ascending: false)
             let daySort = NSSortDescriptor(key: "day", ascending: false)
             let monthSort = NSSortDescriptor(key: "month", ascending: false)
             request.sortDescriptors = [monthSort, daySort, timeSort]
             
-            
-//            self.updatedNotes = try context.fetch(request)
+            // save the data to CoreData
             let updatedNotes = try context.fetch(request)
             delegate?.updateTheNotes(with: updatedNotes)
             
-//            DispatchQueue.main.async {
-//                self.tableView.reloadData()
-//            }
+            // update the view
             delegate?.reloadTheTableView()
         } catch {
+            // TODO: Show alert if saving is unseccsessfull
             print(error)
         }
     }

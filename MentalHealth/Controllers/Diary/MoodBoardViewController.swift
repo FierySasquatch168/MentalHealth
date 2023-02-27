@@ -153,27 +153,18 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         
     }
     
+    // MARK: DateFormatter
+    
     private func setDateAndTimeOfNote() {
         // Form custom date
-        let dayNow = Date()
-        let dayFormatter = DateFormatter()
-        dayFormatter.dateFormat = "dd"
-        let day = dayFormatter.string(from: dayNow)
-        
-        dayFormatter.locale = Locale(identifier: "en_US")
-        dayFormatter.dateFormat = "LLLL"
-        let month = dayFormatter.string(from: dayNow)
-        
-        dayFormatter.dateFormat = "HH:mm"
-        let time = dayFormatter.string(from: dayNow)
+        let day = setTheDateForNote(with: "dd")
+        let month = setTheDateForNote(with: "LLLL")
+        let time = setTheDateForNote(with: "HH:mm")
         
         topDateDescriptionLabel.text = "today, \(month) \(day)\n at \(time)"
     }
     
     private func createDataSourceMockModel() {
-        let color = UIColor.customButtonPurple ?? .black
-        let button = CustomReasonButton(color: color)
-        
         for (key, value) in collectionViewButtonMockData {
             let model = ReasonButtonModel(button: CustomReasonButton(color: .customButtonPurple ?? .black), imageName: value, buttonTitle: key)
             buttonsForCollectionView.append(model)
@@ -218,18 +209,6 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         return snapshot
     }
     
-    // MARK: Create UICollectionView layouts
-    
-//    private func sectionFor(index: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-//        return createLayout()
-//    }
-//
-//    private func createCompositionalLayout() -> UICollectionViewLayout {
-//        return UICollectionViewCompositionalLayout { [unowned self] sectionIndex, environment in
-//            return self.sectionFor(index: sectionIndex, environment: environment)
-//        }
-//    }
-    
     private func createLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(68), heightDimension: .absolute(68))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -250,7 +229,6 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     
     @objc private func saveDidTapped() {
         // Data for transfer
-//        let newNote = MoodNote(context: self.context)
         let newNote = formNewNote()
         
         guard let moodLabelText = topMoodLabel.text,
@@ -272,6 +250,13 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     
     @objc private func didTapBottomSheet() {
         let singleNoteVC = SingleNoteViewController()
+        singleNoteVC.modalPresentationStyle = .pageSheet
+        if #available(iOS 15.0, *) {
+            singleNoteVC.sheetPresentationController?.detents = [.medium()]
+            singleNoteVC.sheetPresentationController?.prefersGrabberVisible = true
+        } else {
+            // Fallback on earlier versions
+        }
         self.present(singleNoteVC, animated: true)
     }
     

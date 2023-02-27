@@ -11,34 +11,20 @@ class SingleNoteViewController: UIViewController {
     
     // MARK: To finish after design is ready
     
-    private lazy var textField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .customTextField
-        textField.layer.cornerRadius = 32
-        textField.font = UIFont(name: CustomFont.kyivTypeSansRegular2.rawValue, size: 16)
-        textField.contentVerticalAlignment = .top
-        textField.contentHorizontalAlignment = .left
-        return textField
+    private lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .customTextField
+        view.layer.cornerRadius = 32
+        return view
     }()
     
-    private lazy var mood: UILabel = {
-        let textView = UILabel()
-        textView.font = UIFont(name: CustomFont.kyivTypeSansRegular2.rawValue, size: 20)
-        textView.text = "Mood: "
-        return textView
-    }()
-    
-    private lazy var timeandDate: UILabel = {
-        let textView = UILabel()
-        textView.text = "Time:"
-        textView.font = UIFont(name: CustomFont.kyivTypeSansRegular2.rawValue, size: 20)
-        return textView
-    }()
-    
-    private lazy var reasons: UILabel = {
-        let textView = UILabel()
-        textView.text = "Reasons:"
-        textView.font = UIFont(name: CustomFont.kyivTypeSansRegular2.rawValue, size: 20)
+    private lazy var textView: UITextView = {
+        let textView = UITextView()
+        textView.backgroundColor = .clear
+        textView.isScrollEnabled = true
+        textView.showsVerticalScrollIndicator = true
+        textView.isEditable = true
+        textView.font = UIFont(name: CustomFont.kyivTypeSansRegular2.rawValue, size: 16)
         return textView
     }()
     
@@ -46,18 +32,6 @@ class SingleNoteViewController: UIViewController {
         let button = BottomActionButton(color: .customPurple ?? .white, title: "Cancel")
         button.heightAnchor.constraint(equalToConstant: 61).isActive = true
         return button
-    }()
-    
-    private lazy var textViewStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.spacing = 10
-        stackView.distribution = .fillEqually
-        stackView.addArrangedSubview(mood)
-        stackView.addArrangedSubview(timeandDate)
-        stackView.addArrangedSubview(reasons)
-        return stackView
     }()
     
     private lazy var saveButton: BottomActionButton = {
@@ -80,32 +54,31 @@ class SingleNoteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setuptextField()
-        setupTextViewStackView()
+        setupBackgroundView()
         setupButtonStack()
     }
     
     // MARK: setup UI
     
-    private func setuptextField() {
-        view.addSubview(textField)
-        textField.translatesAutoresizingMaskIntoConstraints = false
+    private func setupBackgroundView() {
+        view.addSubview(backgroundView)
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
-            textField.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            backgroundView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
+            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-    }
-    
-    private func setupTextViewStackView() {
-        view.addSubview(textViewStackView)
-        textViewStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        backgroundView.addSubview(textView)
+        textView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            textViewStackView.topAnchor.constraint(equalTo: textField.topAnchor, constant: 10),
-            textViewStackView.leadingAnchor.constraint(equalTo: textField.leadingAnchor, constant: 10)
+            textView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 10),
+            textView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 10),
+            textView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -10),
+            textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100)
         ])
     }
     

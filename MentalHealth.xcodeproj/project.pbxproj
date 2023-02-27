@@ -28,6 +28,7 @@
 		3743631829939E41004FFB76 /* MoodImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3743631729939E41004FFB76 /* MoodImageView.swift */; };
 		3743631A2993DAC2004FFB76 /* ReasonButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374363192993DAC2004FFB76 /* ReasonButtonModel.swift */; };
 		3743631C2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */; };
+		3798FEC129ACE9BD000A00B2 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798FEC029ACE9BD000A00B2 /* UITextView+Extension.swift */; };
 		37BD1534299B9062006B2CD9 /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BD1533299B9062006B2CD9 /* TabItem.swift */; };
 		37CBE97729925175002F7E34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE97629925175002F7E34 /* AppDelegate.swift */; };
 		37CBE97929925175002F7E34 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE97829925175002F7E34 /* SceneDelegate.swift */; };
@@ -96,6 +97,7 @@
 		3743631729939E41004FFB76 /* MoodImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodImageView.swift; sourceTree = "<group>"; };
 		374363192993DAC2004FFB76 /* ReasonButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonButtonModel.swift; sourceTree = "<group>"; };
 		3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCustomCollectionViewCell.swift; sourceTree = "<group>"; };
+		3798FEC029ACE9BD000A00B2 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
 		37BD1533299B9062006B2CD9 /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem.swift; sourceTree = "<group>"; };
 		37CBE97329925175002F7E34 /* MentalHealth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MentalHealth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37CBE97629925175002F7E34 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				37CBE9BF29929EBA002F7E34 /* URL+Extension.swift */,
 				37CBE990299252D2002F7E34 /* ReuseIdentifier+Extension.swift */,
 				3736454629953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift */,
+				3798FEC029ACE9BD000A00B2 /* UITextView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -537,6 +540,7 @@
 			files = (
 				3743631829939E41004FFB76 /* MoodImageView.swift in Sources */,
 				3743631C2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift in Sources */,
+				3798FEC129ACE9BD000A00B2 /* UITextView+Extension.swift in Sources */,
 				3738D50629980FB6006EB6C4 /* ArticlesLoader.swift in Sources */,
 				37CBE9CB2992A269002F7E34 /* LibraryViewController.swift in Sources */,
 				3738D50229980F0D006EB6C4 /* ArticleFactoryProtocol.swift in Sources */,
