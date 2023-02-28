@@ -7,7 +7,13 @@
 
 import UIKit
 
-class SingleNoteViewController: UIViewController {
+protocol SingleNoteDelegate: AnyObject {
+    func didSaveNoteToModel(note: String)
+}
+
+final class SingleNoteViewController: UIViewController {
+    
+    weak var singleNoteDelegate: SingleNoteDelegate?
     
     // MARK: To finish after design is ready
     
@@ -18,7 +24,7 @@ class SingleNoteViewController: UIViewController {
         return view
     }()
     
-    private lazy var textView: UITextView = {
+    lazy var textView: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = .clear
         textView.isScrollEnabled = true
@@ -31,12 +37,14 @@ class SingleNoteViewController: UIViewController {
     private lazy var cancelButton: BottomActionButton = {
         let button = BottomActionButton(color: .customPurple ?? .white, title: "Cancel")
         button.heightAnchor.constraint(equalToConstant: 61).isActive = true
+        button.addTarget(self, action: #selector(cancelNoteAdding), for: .touchUpInside)
         return button
     }()
     
     private lazy var saveButton: BottomActionButton = {
         let button = BottomActionButton(color: .customPurple ?? .white, title: "Save")
         button.heightAnchor.constraint(equalToConstant: 61).isActive = true
+        button.addTarget(self, action: #selector(saveAddedNote), for: .touchUpInside)
         return button
     }()
     
@@ -58,7 +66,18 @@ class SingleNoteViewController: UIViewController {
         setupButtonStack()
     }
     
-    // MARK: setup UI
+    // MARK: Behavior
+    
+    @objc private func cancelNoteAdding() {
+        self.dismiss(animated: true)
+    }
+    
+    @objc private func saveAddedNote() {
+        singleNoteDelegate?.didSaveNoteToModel(note: textView.text)
+        self.dismiss(animated: true)
+    }
+    
+    // MARK: Setup UI
     
     private func setupBackgroundView() {
         view.addSubview(backgroundView)

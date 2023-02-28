@@ -8,8 +8,7 @@
 import UIKit
 
 // TODO: set tableView delegate, finish single note screen, check tabbar appearence
-
-class DiaryViewController: DiaryModuleViewController, CoreDataManagerDelegate {
+final class DiaryViewController: DiaryModuleViewController, CoreDataManagerDelegate {
     private var updatedNotes: [MoodNote] = [] {
         didSet {
             setupMiddleStackView()
@@ -17,7 +16,6 @@ class DiaryViewController: DiaryModuleViewController, CoreDataManagerDelegate {
     }
     
     // MARK: TableView
-    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
@@ -35,7 +33,6 @@ class DiaryViewController: DiaryModuleViewController, CoreDataManagerDelegate {
     }()
     
     // MARK: StackViews
-    
     private lazy var middleStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -53,7 +50,6 @@ class DiaryViewController: DiaryModuleViewController, CoreDataManagerDelegate {
     }()
     
     // MARK: Lazy properties
-    
     private lazy var howDoYouFeelLabel: UILabel = {
         let label = UILabel()
         label.text = "How do you feel?"
@@ -95,7 +91,6 @@ class DiaryViewController: DiaryModuleViewController, CoreDataManagerDelegate {
     }()
     
     // MARK: Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -106,7 +101,13 @@ class DiaryViewController: DiaryModuleViewController, CoreDataManagerDelegate {
                 
         // get items from CoreData
         coreDataManager.fetchNotesFromCoreData()
+                
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -124,13 +125,6 @@ class DiaryViewController: DiaryModuleViewController, CoreDataManagerDelegate {
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
-    // MARK: CoreData Delegate
-    
-    func updateTheNotes(with notes: [MoodNote]) {
-        self.updatedNotes = notes
-        print("CoreData Delegate updateTheNotes works")
-    }
-    
     func reloadTheTableView() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -143,7 +137,6 @@ class DiaryViewController: DiaryModuleViewController, CoreDataManagerDelegate {
     private func setupUI() {
         setupTableView()
         setupBackgroundView()
-        
         
     }
     
@@ -193,7 +186,7 @@ class DiaryViewController: DiaryModuleViewController, CoreDataManagerDelegate {
     }
 }
 
-// MARK: Extensions
+// MARK: Extensions TableView delegate and dataSource
 
 extension DiaryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -203,7 +196,7 @@ extension DiaryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomDiaryTableViewCell.reuseIdentifier, for: indexPath) as? CustomDiaryTableViewCell else { return UITableViewCell() }
         let note = updatedNotes[indexPath.row]
-        
+        cell.selectionStyle = .none
         cell.set(note: note)
         return cell
     }
@@ -229,7 +222,16 @@ extension DiaryViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return UISwipeActionsConfiguration(actions: [action])
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let readNoteVC = ReadNoteViewController()
+        readNoteVC.moodNote = updatedNotes[indexPath.row]
+        readNoteVC.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(readNoteVC, animated: true)
+    }
 }
+
+// MARK: Extension DataUpdateDelegate
 
 extension DiaryViewController: DataUpdateDelegate {
     func onDataUpdate(data: MoodNote) {
@@ -239,4 +241,13 @@ extension DiaryViewController: DataUpdateDelegate {
     }
     
     
+}
+
+// MARK: Extension CoreData Delegate
+
+extension DiaryViewController {
+    func updateTheNotes(with notes: [MoodNote]) {
+        self.updatedNotes = notes
+        print("CoreData Delegate updateTheNotes works")
+    }
 }

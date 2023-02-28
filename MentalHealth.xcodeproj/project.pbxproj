@@ -29,6 +29,7 @@
 		3743631A2993DAC2004FFB76 /* ReasonButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374363192993DAC2004FFB76 /* ReasonButtonModel.swift */; };
 		3743631C2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */; };
 		3798FEC129ACE9BD000A00B2 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798FEC029ACE9BD000A00B2 /* UITextView+Extension.swift */; };
+		3798FEC329ACFACC000A00B2 /* ReadNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798FEC229ACFACC000A00B2 /* ReadNoteViewController.swift */; };
 		37BD1534299B9062006B2CD9 /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BD1533299B9062006B2CD9 /* TabItem.swift */; };
 		37CBE97729925175002F7E34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE97629925175002F7E34 /* AppDelegate.swift */; };
 		37CBE97929925175002F7E34 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE97829925175002F7E34 /* SceneDelegate.swift */; };
@@ -73,6 +74,7 @@
 		37CBE9EA2992E078002F7E34 /* MoodBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE9E92992E078002F7E34 /* MoodBoardViewController.swift */; };
 		37CBE9EF2992EEB9002F7E34 /* MoodNote+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE9ED2992EEB9002F7E34 /* MoodNote+CoreDataClass.swift */; };
 		37CBE9F02992EEB9002F7E34 /* MoodNote+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE9EE2992EEB9002F7E34 /* MoodNote+CoreDataProperties.swift */; };
+		37DD3E2D29AE3284007790C1 /* CustomDismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD3E2C29AE3284007790C1 /* CustomDismissButton.swift */; };
 		37E6C78C299E93AB00F4D6CA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E6C78B299E93AB00F4D6CA /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +100,7 @@
 		374363192993DAC2004FFB76 /* ReasonButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonButtonModel.swift; sourceTree = "<group>"; };
 		3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		3798FEC029ACE9BD000A00B2 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
+		3798FEC229ACFACC000A00B2 /* ReadNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadNoteViewController.swift; sourceTree = "<group>"; };
 		37BD1533299B9062006B2CD9 /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem.swift; sourceTree = "<group>"; };
 		37CBE97329925175002F7E34 /* MentalHealth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MentalHealth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37CBE97629925175002F7E34 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +147,7 @@
 		37CBE9E92992E078002F7E34 /* MoodBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodBoardViewController.swift; sourceTree = "<group>"; };
 		37CBE9ED2992EEB9002F7E34 /* MoodNote+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoodNote+CoreDataClass.swift"; sourceTree = "<group>"; };
 		37CBE9EE2992EEB9002F7E34 /* MoodNote+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoodNote+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		37DD3E2C29AE3284007790C1 /* CustomDismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDismissButton.swift; sourceTree = "<group>"; };
 		37E6C78B299E93AB00F4D6CA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -262,6 +266,7 @@
 				37CBE9E52992B97A002F7E34 /* CustomDiaryTableViewCell.swift */,
 				3743631B2993E287004FFB76 /* ReasonCustomCollectionViewCell.swift */,
 				3743631729939E41004FFB76 /* MoodImageView.swift */,
+				37DD3E2C29AE3284007790C1 /* CustomDismissButton.swift */,
 			);
 			path = DiaryViews;
 			sourceTree = "<group>";
@@ -418,6 +423,7 @@
 				37CBE9E72992D4B3002F7E34 /* AddMoodViewController.swift */,
 				37CBE9E92992E078002F7E34 /* MoodBoardViewController.swift */,
 				3738D4EB2997F7E0006EB6C4 /* SingleNoteViewController.swift */,
+				3798FEC229ACFACC000A00B2 /* ReadNoteViewController.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -577,6 +583,7 @@
 				37CBE9C72992A22C002F7E34 /* DiaryViewController.swift in Sources */,
 				37CBE9D52992A54E002F7E34 /* AlertModel.swift in Sources */,
 				37CBE9B629929673002F7E34 /* WebViewControllerDelegate.swift in Sources */,
+				37DD3E2D29AE3284007790C1 /* CustomDismissButton.swift in Sources */,
 				37CBE97B29925175002F7E34 /* LoginViewController.swift in Sources */,
 				37CBE9BB29929E12002F7E34 /* ProfileService.swift in Sources */,
 				37CBE9E22992B6EE002F7E34 /* DataUpdateModel.swift in Sources */,
@@ -586,6 +593,7 @@
 				37CBE991299252D2002F7E34 /* ReuseIdentifier+Extension.swift in Sources */,
 				371D88DF299E21D30079FDEA /* CustomSegmentedControl.swift in Sources */,
 				37CBE993299252F2002F7E34 /* Array+Extension.swift in Sources */,
+				3798FEC329ACFACC000A00B2 /* ReadNoteViewController.swift in Sources */,
 				37CBE97729925175002F7E34 /* AppDelegate.swift in Sources */,
 				371D88E7299E39410079FDEA /* ChartViewButton.swift in Sources */,
 				3738D50429980F2F006EB6C4 /* ArticleFactoryDelegate.swift in Sources */,

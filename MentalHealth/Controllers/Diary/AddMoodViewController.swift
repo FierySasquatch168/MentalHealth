@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddMoodViewController: DiaryModuleViewController, ReasonsUpdateDelegate, UpdatingDataControllerProtocol {
+final class AddMoodViewController: DiaryModuleViewController, ReasonsUpdateDelegate, UpdatingDataControllerProtocol {
     
     // Protocol conformance
     var updatingData: [MoodNote] = []
@@ -108,14 +108,9 @@ class AddMoodViewController: DiaryModuleViewController, ReasonsUpdateDelegate, U
         return button
     }()
     
-    private lazy var dismissButton: UIButton = {
-        let button = UIButton()
-        let image = UIImage(systemName: "xmark")
-        image?.withRenderingMode(.alwaysTemplate)
-        button.setImage(image, for: .normal)
+    private lazy var dismissButton: CustomDismissButton = {
+        let button = CustomDismissButton()
         button.addTarget(self, action: #selector(dismissToRoot), for: .touchUpInside)
-        button.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return button
     }()
     
@@ -220,6 +215,7 @@ class AddMoodViewController: DiaryModuleViewController, ReasonsUpdateDelegate, U
         newNote.backgroundImage = backgroundImage
         newNote.moodDescription = moodLabelText
         newNote.reasonsDescription = "You preferred not to describe your feelings"
+        newNote.note = "No text was added here"
         
         // handle data to the delegate
         handleUpdatedDataDelegate?.onDataUpdate(data: newNote)

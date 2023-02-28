@@ -19,6 +19,10 @@ extension UIColor {
     static var customTextView: UIColor? { UIColor(named: "customTextView")}
     static var customDate: UIColor? { UIColor(named: "customDate")}
     static var customTextField: UIColor? { UIColor(named: "customTextField")}
+    static var customResentment: UIColor? { UIColor(named: "customResentment")}
+    static var customHappy: UIColor? { UIColor(named: "customHappy")}
+    static var customTextViewTextColor: UIColor? { UIColor(named: "customTextViewTextColor")}
+    static var customResentmentBackground: UIColor? { UIColor(named: "customResentmentBackground")}
 
     static var customGreen = UIColor(red: 168/255, green: 234/255, blue: 194/255, alpha: 1.0)
     static var customLighBlue = UIColor(red: 166/255, green: 230/255, blue: 244/255, alpha: 1.0)
@@ -26,6 +30,3 @@ extension UIColor {
     static var customYellow = UIColor(red: 253/255, green: 255/255, blue: 173/255, alpha: 1.0)
 
 }
-
-
-
