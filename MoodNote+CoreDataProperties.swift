@@ -23,6 +23,7 @@ extension MoodNote {
     @NSManaged public var moodDescription: String?
     @NSManaged public var reasonsDescription: String?
     @NSManaged public var time: String?
+    @NSManaged public var note: String?
 
 }
 

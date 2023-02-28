@@ -7,16 +7,15 @@
 
 import UIKit
 
-class MoodBoardViewController: DiaryModuleViewController, UpdatingDataControllerProtocol {
+final class MoodBoardViewController: DiaryModuleViewController, UpdatingDataControllerProtocol {
     
-    private typealias DataSource = UICollectionViewDiffableDataSource<String, ReasonButtonModel>
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<String, ReasonButtonModel>
-    
-    // Protocol conformance
+    // UpdatingDataControllerProtocol conformance
     var updatingData: [MoodNote] = []
     var mood: UIImage?
     var backgroundImage: UIImage?
     var moodDescription: String?
+    
+    var singleNote: String?
     
     // Reasons to send to tableView
     private var collectionViewButtonMockData: [String: String] = [
@@ -49,14 +48,9 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
     
     // MARK: TOP lazy properties
     
-    private lazy var dismissButton: UIButton = {
-        let button = UIButton()
-        let image = UIImage(systemName: "xmark")
-        image?.withRenderingMode(.alwaysTemplate)
-        button.setImage(image, for: .normal)
+    private lazy var dismissButton: CustomDismissButton = {
+        let button = CustomDismissButton()
         button.addTarget(self, action: #selector(dismissToPreviousScreen), for: .touchUpInside)
-        button.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return button
     }()
     
@@ -115,7 +109,7 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         button.layer.cornerRadius = 32
         button.contentVerticalAlignment = .top
         button.contentHorizontalAlignment = .leading
-        button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 28, bottom: 0, right: 0)
+        button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 28, bottom: 0, right: 28)
         button.addTarget(self, action: #selector(didTapBottomSheet), for: .touchUpInside)
         return button
     }()
@@ -164,6 +158,79 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         topDateDescriptionLabel.text = "today, \(month) \(day)\n at \(time)"
     }
     
+    // MARK: @OBJC funcs
+    
+    @objc private func dismissToPreviousScreen() {
+        self.dismiss(animated: true)
+    }
+    
+    @objc private func saveDidTapped() {
+        // Data for transfer
+        let newNote = formNewNote()
+        
+        guard let moodLabelText = topMoodLabel.text,
+                let moodImage = UIImage(named: moodLabelText),
+                let backgroundImage = UIImage(named: moodBackgroundChoice[moodLabelText]!)
+        else { return }
+        
+        newNote.mood = moodImage
+        newNote.backgroundImage = backgroundImage
+        newNote.moodDescription = moodLabelText
+        newNote.reasonsDescription = chosenReasons.isEmpty ? "You preferred not to describe the reasons" : chosenReasons.joined(separator: ", ")
+        newNote.note = singleNote
+        
+        // Handle data to delegate
+        handleUpdatedDataDelegate?.saveNote(data: newNote)
+                
+        // Return to rootVC
+        goToRootVC()
+    }
+    
+    @objc private func didTapBottomSheet() {
+        let singleNoteVC = SingleNoteViewController()
+        singleNoteVC.isModalInPresentation = true
+        singleNoteVC.singleNoteDelegate = self
+        singleNoteVC.modalPresentationStyle = .pageSheet
+        singleNoteVC.textView.text = bottomSheet.titleLabel?.text
+        if #available(iOS 15.0, *) {
+            singleNoteVC.sheetPresentationController?.detents = [.medium()]
+            singleNoteVC.sheetPresentationController?.prefersGrabberVisible = true
+        } else {
+            // Fallback on earlier versions
+        }
+        self.present(singleNoteVC, animated: true)
+    }
+    
+    // MARK: Private funcs
+    
+    private func goToRootVC() {
+        self.dismiss(animated: true)
+    }
+    
+    // MARK: UI setup
+    
+    private func setupUpperUI() {
+        setupTopImageView()
+        setupTopMoodAndDateStackView()
+        setupTellMeLabel()
+        setupDismissButton()
+        setDateAndTimeOfNote()
+    }
+    
+    private func setupLowerUI() {
+        setupBottomSheet()
+        setupBottomRectangle()
+        setupSaveButton()
+    }
+
+}
+
+// MARK: Extension CollectionView and dataSource
+
+extension MoodBoardViewController {
+    private typealias DataSource = UICollectionViewDiffableDataSource<String, ReasonButtonModel>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<String, ReasonButtonModel>
+    
     private func createDataSourceMockModel() {
         for (key, value) in collectionViewButtonMockData {
             let model = ReasonButtonModel(button: CustomReasonButton(color: .customButtonPurple ?? .black), imageName: value, buttonTitle: key)
@@ -171,21 +238,6 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         }
     }
     
-    // MARK: CollectionView setup
-    
-    private func setupCollectionView() {
-        view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: tellMeLabel.bottomAnchor, constant: 38),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -190)
-        ])
-    }
-    
-    // MARK: UICV dataSource setup
     private func createDataSource() {
         dataSource = DataSource(collectionView: collectionView, cellProvider: { [unowned self] (collectionView, indexPath, itemIdentifier) in
             return self.cell(collectionView: collectionView, indexPath: indexPath, item: itemIdentifier)
@@ -220,66 +272,48 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
         return layout
         
     }
-    
-    // MARK: @OBJC funcs
-    
-    @objc private func dismissToPreviousScreen() {
-        dismiss(animated: true)
-    }
-    
-    @objc private func saveDidTapped() {
-        // Data for transfer
-        let newNote = formNewNote()
-        
-        guard let moodLabelText = topMoodLabel.text,
-                let moodImage = UIImage(named: moodLabelText),
-                let backgroundImage = UIImage(named: moodBackgroundChoice[moodLabelText]!)
-        else { return }
-        
-        newNote.mood = moodImage
-        newNote.backgroundImage = backgroundImage
-        newNote.moodDescription = moodLabelText
-        newNote.reasonsDescription = chosenReasons.isEmpty ? "You preferred not to describe the reasons" : chosenReasons.joined(separator: ", ")
-        
-        // Handle data to delegate
-        handleUpdatedDataDelegate?.saveNote(data: newNote)
-                
-        // Return to rootVC
-        goToRootVC()
-    }
-    
-    @objc private func didTapBottomSheet() {
-        let singleNoteVC = SingleNoteViewController()
-        singleNoteVC.modalPresentationStyle = .pageSheet
-        if #available(iOS 15.0, *) {
-            singleNoteVC.sheetPresentationController?.detents = [.medium()]
-            singleNoteVC.sheetPresentationController?.prefersGrabberVisible = true
+}
+
+// MARK: Extension CellDelegate
+
+extension MoodBoardViewController: ReasonCustomCollectionViewCellDelegate {
+    func didTapButton(with title: String) {
+        if chosenReasons.contains(title) {
+            chosenReasons.removeAll(where: { $0 == title })
         } else {
-            // Fallback on earlier versions
+            chosenReasons.append(title)
         }
-        self.present(singleNoteVC, animated: true)
     }
-    
-    // MARK: Private funcs
-    
-    private func goToRootVC() {
-        self.dismiss(animated: true)
+}
+
+// MARK: Extension SingleNoteDelegate
+
+extension MoodBoardViewController: SingleNoteDelegate {
+    func didSaveNoteToModel(note: String) {
+        singleNote = note
+        
+        let title = note
+        let attribute = [NSAttributedString.Key.font: UIFont(name: CustomFont.InterLight.rawValue, size: 14)]
+        let attributedTitle = NSAttributedString(string: title, attributes: attribute as [NSAttributedString.Key : Any])
+        bottomSheet.setAttributedTitle(attributedTitle, for: .normal)
+        
     }
+}
+
+// MARK: Extension UISetup
+
+extension MoodBoardViewController {
     
-    // MARK: UI setup
-    
-    private func setupUpperUI() {
-        setupTopImageView()
-        setupTopMoodAndDateStackView()
-        setupTellMeLabel()
-        setupDismissButton()
-        setDateAndTimeOfNote()
-    }
-    
-    private func setupLowerUI() {
-        setupBottomSheet()
-        setupBottomRectangle()
-        setupSaveButton()
+    private func setupCollectionView() {
+        view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: tellMeLabel.bottomAnchor, constant: 38),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -190)
+        ])
     }
     
     private func setupTopImageView() {
@@ -361,18 +395,5 @@ class MoodBoardViewController: DiaryModuleViewController, UpdatingDataController
             saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -115),
             saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-    }
-
-}
-
-// MARK: Extension CellDelegate
-
-extension MoodBoardViewController: ReasonCustomCollectionViewCellDelegate {
-    func didTapButton(with title: String) {
-        if chosenReasons.contains(title) {
-            chosenReasons.removeAll(where: { $0 == title })
-        } else {
-            chosenReasons.append(title)
-        }
     }
 }
