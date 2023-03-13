@@ -16,7 +16,7 @@ class AnalyticsViewController: UIViewController {
     private var chartValues: [Double] = [49, 17, 17, 17]
     private var timeOptions = ["This week", "30 days", "All time"]
     
-    private var reasons = ["Work", "Study", "Friends"]
+    private var reasons = ["Reasons", "Fetching", "Error"]
     private var feelings = ["loneliness", "sad", "anger"]
     
     private var headers = ["It upsets me mostly", "That's why I feel"]
@@ -31,6 +31,7 @@ class AnalyticsViewController: UIViewController {
     }()
     
     private var dataSource: DataSource?
+    private var analyticsProvider: AnalyticsProviderProtocol?
     
     
     private var analyticsViewIsHidden: Bool = true {
@@ -257,6 +258,10 @@ class AnalyticsViewController: UIViewController {
         super.viewDidLoad()
         
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        analyticsProvider = AnalyticsProvider(dataConverter: DataConverter(), coreDataManager: CoreDataManager.shared)
+        analyticsProvider?.fetchModelForAnalysis()
+        
         setupUI()
         setupCollectionView()
         createDataSource()
@@ -376,7 +381,10 @@ class AnalyticsViewController: UIViewController {
     private func createSnapshot() -> Snapshot {
         var snapshot = Snapshot()
         snapshot.appendSections(headers)
-        snapshot.appendItems(reasons, toSection: headers[0])
+        // MARK: reasons connected to the model
+        guard let model = analyticsProvider?.deliverModelForPresentation() else { fatalError("analytics model is not connected") }
+        snapshot.appendItems(model, toSection: headers[0])
+        // TODO: Connect feeling to the model somehow
         snapshot.appendItems(feelings, toSection: headers[1])
         return snapshot
     }
@@ -436,7 +444,20 @@ class AnalyticsViewController: UIViewController {
         section.boundarySupplementaryItems = [headerElement]
     }
     
-    // MARK: UI setup
+    
+
+    
+}
+
+// MARK: Extension Charts
+
+extension AnalyticsViewController: ChartViewDelegate {
+    
+}
+
+// MARK: UI Setup
+
+extension AnalyticsViewController {
     
     private func setupUI() {
         setupBackgroundTopView()
@@ -543,10 +564,4 @@ class AnalyticsViewController: UIViewController {
             timePeriod.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -72)
         ])
     }
-
-    
-}
-
-extension AnalyticsViewController: ChartViewDelegate {
-    
 }

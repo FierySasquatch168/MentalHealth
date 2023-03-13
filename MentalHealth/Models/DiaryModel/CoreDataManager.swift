@@ -10,11 +10,15 @@ import CoreData
 
 protocol CoreDataManagerDelegate: AnyObject {
     func updateTheNotes(with notes: [MoodNote])
-    func reloadTheTableView()
 }
 
-final class CoreDataManager {
-    
+protocol CoreDataManageable {
+    var delegate: CoreDataManagerDelegate? { get set }
+    func fetchNotesFromCoreData()
+    func saveNotesToCoreData()
+}
+
+final class CoreDataManager: CoreDataManageable {
     static let shared = CoreDataManager()
     weak var delegate: CoreDataManagerDelegate?
     
@@ -40,8 +44,6 @@ final class CoreDataManager {
             let updatedNotes = try context.fetch(request)
             delegate?.updateTheNotes(with: updatedNotes)
             
-            // update the view
-            delegate?.reloadTheTableView()
         } catch {
             // TODO: Show alert if saving is unseccsessfull
             print(error)

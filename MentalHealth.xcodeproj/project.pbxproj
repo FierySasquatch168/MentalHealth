@@ -76,6 +76,8 @@
 		37CBE9F02992EEB9002F7E34 /* MoodNote+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CBE9EE2992EEB9002F7E34 /* MoodNote+CoreDataProperties.swift */; };
 		37DD3E2D29AE3284007790C1 /* CustomDismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD3E2C29AE3284007790C1 /* CustomDismissButton.swift */; };
 		37E6C78C299E93AB00F4D6CA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E6C78B299E93AB00F4D6CA /* CoreDataManager.swift */; };
+		37F694FC29BF7036009AA469 /* AnalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F694FB29BF7036009AA469 /* AnalyticsProvider.swift */; };
+		37F694FE29BF9843009AA469 /* DataConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F694FD29BF9843009AA469 /* DataConverter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -149,6 +151,8 @@
 		37CBE9EE2992EEB9002F7E34 /* MoodNote+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoodNote+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		37DD3E2C29AE3284007790C1 /* CustomDismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDismissButton.swift; sourceTree = "<group>"; };
 		37E6C78B299E93AB00F4D6CA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		37F694FB29BF7036009AA469 /* AnalyticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsProvider.swift; sourceTree = "<group>"; };
+		37F694FD29BF9843009AA469 /* DataConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConverter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -362,6 +366,7 @@
 				37BD1532299B9051006B2CD9 /* TabBarModel */,
 				3738D50729983958006EB6C4 /* AuthorizationModel */,
 				37CBE9E02992B6A5002F7E34 /* DiaryModel */,
+				37F694FA29BF7018009AA469 /* AnalyticsModel */,
 				3738D4ED29980397006EB6C4 /* LibraryModel */,
 				3738D50C29983E2D006EB6C4 /* AlertModel */,
 			);
@@ -463,6 +468,15 @@
 			path = DiaryModel;
 			sourceTree = "<group>";
 		};
+		37F694FA29BF7018009AA469 /* AnalyticsModel */ = {
+			isa = PBXGroup;
+			children = (
+				37F694FB29BF7036009AA469 /* AnalyticsProvider.swift */,
+				37F694FD29BF9843009AA469 /* DataConverter.swift */,
+			);
+			path = AnalyticsModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -561,6 +575,7 @@
 				3736454729953D5F00A82E25 /* CustomDiaryModuleVC+Extension.swift in Sources */,
 				37CBE98129925175002F7E34 /* MentalHealth.xcdatamodeld in Sources */,
 				37CBE9CD2992A274002F7E34 /* ProfileViewController.swift in Sources */,
+				37F694FC29BF7036009AA469 /* AnalyticsProvider.swift in Sources */,
 				37CBE9D32992A53C002F7E34 /* AlertPresenter.swift in Sources */,
 				37CBE9C52992A1D2002F7E34 /* MainTabBarViewController.swift in Sources */,
 				3738D4F729980537006EB6C4 /* LibraryCustomNewCell.swift in Sources */,
@@ -586,6 +601,7 @@
 				37DD3E2D29AE3284007790C1 /* CustomDismissButton.swift in Sources */,
 				37CBE97B29925175002F7E34 /* LoginViewController.swift in Sources */,
 				37CBE9BB29929E12002F7E34 /* ProfileService.swift in Sources */,
+				37F694FE29BF9843009AA469 /* DataConverter.swift in Sources */,
 				37CBE9E22992B6EE002F7E34 /* DataUpdateModel.swift in Sources */,
 				37CBE9A5299261F4002F7E34 /* CustomFont.swift in Sources */,
 				3743631A2993DAC2004FFB76 /* ReasonButtonModel.swift in Sources */,

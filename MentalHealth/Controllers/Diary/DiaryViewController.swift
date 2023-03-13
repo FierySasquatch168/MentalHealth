@@ -21,6 +21,7 @@ final class DiaryViewController: DiaryModuleViewController, CoreDataManagerDeleg
         tableView.backgroundColor = .white
         tableView.frame = view.bounds
         tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -120,16 +121,11 @@ final class DiaryViewController: DiaryModuleViewController, CoreDataManagerDeleg
     
     @objc private func addNewNote() {
         let nextVC = AddMoodViewController()
+        // set the recent class as coreDataDelegate
+        coreDataManager.delegate = self
         // set the recent class as delegate
         nextVC.handleUpdatedDataDelegate = self
         self.navigationController?.pushViewController(nextVC, animated: true)
-    }
-    
-    func reloadTheTableView() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-            print("CoreData Delegate reloadTheTableView works")
-        }
     }
     
     // MARK: Setup UI
@@ -217,6 +213,7 @@ extension DiaryViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
             // Re-fetch the data
+            self.coreDataManager.delegate = self
             self.coreDataManager.fetchNotesFromCoreData()
             self.tableView.reloadData()
         }
